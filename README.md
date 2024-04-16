@@ -1,5 +1,10 @@
 ![](../../workflows/gds/badge.svg) ![](../../workflows/docs/badge.svg)
 
+# WoWA: World's Worst ADC
+
+Will migrate everything but the original giant mess, with all the xschem, testbenches and sims is at [tt06-wowa](https://github.com/psychogenic/tt06-wowa).
+
+
 # Tiny Tapeout Analog Project Template
 
 - [Read the documentation for project](docs/info.md)
