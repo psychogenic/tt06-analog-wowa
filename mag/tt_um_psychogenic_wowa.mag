@@ -1,7 +1,7 @@
 magic
 tech sky130A
 magscale 1 2
-timestamp 1713253534
+timestamp 1713283579
 << metal1 >>
 rect 23560 19159 29606 19206
 rect 23560 18961 23631 19159
@@ -1155,7 +1155,7 @@ timestamp 1713251032
 transform 1 0 1626 0 1 -22900
 box 4762 25894 25772 41430
 use wowa_digital  wowa_digital_0
-timestamp 1713200672
+timestamp 1713283579
 transform 1 0 3366 0 1 24460
 box 842 0 14062 17164
 << labels >>
