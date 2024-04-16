@@ -1,7 +1,7 @@
 magic
 tech sky130A
 magscale 1 2
-timestamp 1713245506
+timestamp 1713251032
 << metal1 >>
 rect 23560 19159 29606 19206
 rect 23560 18961 23631 19159
@@ -1154,12 +1154,12 @@ rect 22480 0 22600 20
 rect 26896 0 27016 40
 rect 31260 20 31580 240
 rect 31312 0 31432 20
-use p3_opamp  p3_opamp_0 
-timestamp 1712912662
+use p3_opamp  p3_opamp_0
+timestamp 1713250823
 transform 1 0 17840 0 1 -200
 box 3650 3170 8500 8260
-use wowa_analog  wowa_analog_0 
-timestamp 1713174089
+use wowa_analog  wowa_analog_0
+timestamp 1713251032
 transform 1 0 1626 0 1 -22900
 box 4762 25894 25772 41430
 use wowa_digital  wowa_digital_0

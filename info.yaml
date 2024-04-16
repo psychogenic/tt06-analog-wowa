@@ -53,10 +53,11 @@ pinout:
   # Keep only the "ua" pins you are actually using, and *delete* any unused "ua" pins.
   # The first pins is always ua[0], and the pin numbers must be sequential.
   ua[0]: "Comparator out"
-  ua[1]: "p3 opamp plus"
-  ua[2]: "p3 opamp minus/ext threshold for comp"
-  ua[3]: "Analog input to ADC"
-  ua[4]: "Matt's DAC output"
+  ua[1]: "p3 opamp out"
+  ua[2]: "p3 opamp plus"
+  ua[3]: "p3 opamp minus/ext threshold for comp"
+  ua[4]: "Analog input to ADC"
+  ua[5]: "Matt's DAC output"
 
 # Do not change!
 yaml_version: 6
