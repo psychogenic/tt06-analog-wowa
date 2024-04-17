@@ -1,0 +1,31 @@
+
+unit n
+voltage VCC
+slope 1
+format hspice_simple
+
+param eval 1000
+
+beginfile stimuli_tb_analogswitch.cir
+set vss 0
+set vcc 1
+set en 0
+s 100
+set en 1
+s 300
+set en 0
+s 200
+set en 1
+s 269
+set en 0
+s 400
+set en 1
+s 389
+set en 0
+s 400
+
+
+endfile
+
+
+

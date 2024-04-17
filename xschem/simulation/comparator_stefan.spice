@@ -1,0 +1,20 @@
+** sch_path: /home/ttuser/wowa/xschem/comparator_stefan.sch
+.subckt comparator_stefan PLUS MINUS VCC VSS EN_N ADJ DIFFOUT
+*.PININFO PLUS:I MINUS:I VCC:I VSS:I EN_N:I ADJ:I DIFFOUT:O
+XM1 inhigh EN_N VCC VCC sky130_fd_pr__pfet_01v8 L=8 W=2 nf=1 m=1
+XM2 G1 MINUS inhigh VCC sky130_fd_pr__pfet_01v8_lvt L=2 W=8 nf=1 m=1
+XM3 inhigh PLUS G2 VCC sky130_fd_pr__pfet_01v8_lvt L=2 W=8 nf=1 m=1
+XM4 G2 G2 VSS VSS sky130_fd_pr__nfet_01v8_lvt L=4 W=2 nf=1 m=1
+XM5 VSS G1 G1 VSS sky130_fd_pr__nfet_01v8_lvt L=4 W=2 nf=1 m=1
+XM6 pg2g G1 VSS VSS sky130_fd_pr__nfet_01v8_lvt L=4 W=2 nf=1 m=1
+XM7 mirhigh pg2g pg2g VCC sky130_fd_pr__pfet_01v8_lvt L=4 W=4 nf=1 m=1
+XM8 DIFFOUT pg2g mirhigh VCC sky130_fd_pr__pfet_01v8_lvt L=4 W=4 nf=1 m=1
+XM9 mirhigh EN_N VCC VCC sky130_fd_pr__pfet_01v8 L=0.15 W=5 nf=1 m=1
+XM10 DIFFOUT G2 VSS VSS sky130_fd_pr__nfet_01v8_lvt L=4 W=2 nf=1 m=1
+XM11 DIFFOUT EN_N VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 m=1
+XM12 p2p EN_N VCC VCC sky130_fd_pr__pfet_01v8 L=8 W=1 nf=1 m=1
+XM13 G1 ADJ p2p VCC sky130_fd_pr__pfet_01v8_lvt L=1 W=1 nf=1 m=1
+XM14 G1 ADJ n2n VSS sky130_fd_pr__nfet_01v8_lvt L=1 W=0.5 nf=1 m=1
+XM15 n2n VCC VSS VSS sky130_fd_pr__nfet_01v8_lvt L=8 W=0.5 nf=1 m=1
+.ends
+.end

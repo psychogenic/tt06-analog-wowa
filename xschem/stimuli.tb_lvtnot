@@ -1,0 +1,19 @@
+
+unit n
+voltage VCC
+slope 1
+format hspice_simple
+
+param eval 200
+
+beginfile stimuli_tb_lvtnot.cir
+set vss 0
+set vcc 1
+set a 0
+s eval
+set a 1
+s eval
+set a 0
+s eval
+
+endfile

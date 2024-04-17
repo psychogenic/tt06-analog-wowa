@@ -1,0 +1,15 @@
+************************************** 
+* SPICE STIMULI FILE 
+* generated from 
+************************************** 
+
+Vthreshv threshv 0 PWL 0n 0.6 
+Vvss vss 0 PWL 0n 0 
+Vinput input 0 PWL 0n 0.1 600n 0.1 601n 0.75 800n 0.75 801n 1.0 1000n 
++1.0 1001n 0.4 1200n 0.4 1201n 0.2 1800n 0.2 1801n 0.4 2000n 0.4 2001n 0.8 
++2200n 0.8 2201n 0.5 2400n 0.5 2401n 0.7 2600n 0.7 2601n 0.3 
+Ven_n en_n 0 PWL 0n 0 
+Vcalib calib 0 PWL 0n 0 200n 0 201n VCC 400n VCC 401n 0 1400n 
++0 1401n VCC 1600n VCC 1601n 0 
+Vvcc vcc 0 PWL 0n VCC 
+

@@ -1,0 +1,7 @@
+** sch_path: /home/ttuser/wowa/xschem/lvtnot.sch
+.subckt lvtnot y a VCCPIN VSSPIN
+*.PININFO y:O a:I VCCPIN:I VSSPIN:I
+XM2 y a VCCPIN VCCPIN sky130_fd_pr__pfet_01v8_lvt L=0.35 W=2 nf=1 m=1
+XM1 y a VSSPIN VSSPIN sky130_fd_pr__nfet_01v8_lvt L=0.15 W=1 nf=1 m=1
+.ends
+.end

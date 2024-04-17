@@ -1,0 +1,27 @@
+
+unit n
+voltage VCC
+slope 1
+format hspice_simple
+
+param eval 200
+
+beginfile stimuli_tb_onehot2mux.cir
+set vss 0
+set vcc 1
+set sel 0
+set in0 0.5
+set in1 1.2
+s eval
+set sel 1
+s eval
+set in1 0.9
+s eval
+set in0 1.7
+s eval
+set sel 0
+s eval
+
+endfile
+
+

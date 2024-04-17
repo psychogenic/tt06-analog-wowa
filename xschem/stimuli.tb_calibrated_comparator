@@ -1,0 +1,47 @@
+
+unit n
+voltage VCC
+slope 1
+format hspice_simple
+
+param thresh 0.6
+beginfile stimuli_tb_calibrated_comparator.cir
+set vss 0
+set vcc 1
+set en_n 0
+set calib 0
+set threshv thresh
+set input 0.1
+s 200
+set calib 1
+s 200
+set calib 0
+s 200
+set input thresh+0.15
+s 200
+set input thresh+0.4
+s 200
+set input thresh-0.2
+s 200
+set input 0.2
+s 200
+set calib 1
+s 200
+set calib 0
+s 200
+
+set input thresh-0.2
+s 200
+set input thresh+0.2
+s 200
+set input thresh-0.1
+s 200
+set input thresh+0.1
+s 200
+set input thresh-0.3
+s 300
+
+
+
+endfile
+

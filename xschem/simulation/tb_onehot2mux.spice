@@ -1,0 +1,109 @@
+** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/tb_onehot2mux.sch
+**.subckt tb_onehot2mux
+x1 VCC VSS SEL IN1 OUT IN0 onehot2mux
+**** begin user architecture code
+
+.param mc_mm_switch=1
+.param mc_pr_switch=0
+.include /home/ttuser/pdk/sky130A/libs.tech/ngspice/corners/tt.spice
+.include /home/ttuser/pdk/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical.spice
+.include /home/ttuser/pdk/sky130A/libs.tech/ngspice/r+c/res_typical__cap_typical__lin.spice
+.include /home/ttuser/pdk/sky130A/libs.tech/ngspice/corners/tt/specialized_cells.spice
+
+
+
+** this experimental option enables mos model bin
+** selection based on W/NF instead of W
+.option chgtol=4e-16 method=gear
+
+.param VCCGAUSS = agauss(1.8, 0.05, 1)
+.param VCC = 'VCCGAUSS'
+** use following line to remove VCC variations
+* .param VCC = 1.8
+.param VDLGAUSS = agauss(0.9, 0.23, 1)
+.param VDL = VDLGAUSS
+** use following line to remove input common mode variations
+* .param VDL =  0.9
+.param TEMPGAUSS = agauss(40, 30, 1)
+.option temp = 'TEMPGAUSS'
+** use following line to remove temperature variations
+* .option temp = 25
+.param DELTA = 0.002
+
+.include stimuli_tb_onehot2mux.cir
+
+.control
+  setseed  8
+  reset
+  let run = 1
+  save all
+  op
+  write tb_onehot2mux.raw
+  reset
+  set appendwrite
+  dowhile run < = 50
+    save all
+    tran 1n 1000n uic
+    write tb_onehot2mux.raw
+    let run = run + 1
+    reset
+  end
+  quit 0
+.endc
+
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  onehot2mux.sym # of pins=6
+** sym_path: /home/ttuser/work/tt06-analog-wowa/xschem/onehot2mux.sym
+** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/onehot2mux.sch
+.subckt onehot2mux VCC VSS SEL IN1 OUT IN0
+*.ipin SEL
+*.ipin IN0
+*.ipin IN1
+*.opin OUT
+*.ipin VCC
+*.ipin VSS
+x2 OUT IN1 SEL_N SEL VSS VCC passgate
+x3 OUT IN0 SEL SEL_N VSS VCC passgate
+x1 SEL SEL_N VCC VSS lvtnot
+.ends
+
+
+* expanding   symbol:  passgate.sym # of pins=6
+** sym_path: /home/ttuser/work/tt06-analog-wowa/xschem/passgate.sym
+** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/passgate.sch
+.subckt passgate Z A GP GN VSSBPIN VCCBPIN
+*.iopin A
+*.iopin Z
+*.ipin GP
+*.ipin GN
+*.ipin VCCBPIN
+*.ipin VSSBPIN
+XM1 Z GN A VSSBPIN sky130_fd_pr__nfet_01v8 L=0.2 W=2 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
++ sa=0 sb=0 sd=0 mult=1 m=1
+XM2 Z GP A VCCBPIN sky130_fd_pr__pfet_01v8 L=0.2 W=2 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
++ sa=0 sb=0 sd=0 mult=1 m=1
+.ends
+
+
+* expanding   symbol:  lvtnot.sym # of pins=4
+** sym_path: /home/ttuser/work/tt06-analog-wowa/xschem/lvtnot.sym
+** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/lvtnot.sch
+.subckt lvtnot a y VCCPIN VSSPIN
+*.opin y
+*.ipin a
+*.ipin VCCPIN
+*.ipin VSSPIN
+XM2 y a VCCPIN VCCPIN sky130_fd_pr__pfet_01v8_lvt L=0.35 W=2 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
++ sa=0 sb=0 sd=0 mult=1 m=1
+XM1 y a VSSPIN VSSPIN sky130_fd_pr__nfet_01v8_lvt L=0.15 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
++ sa=0 sb=0 sd=0 mult=1 m=1
+.ends
+
+.end
