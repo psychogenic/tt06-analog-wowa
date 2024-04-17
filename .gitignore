@@ -10,3 +10,5 @@ test/__pycache__/
 test/results.xml
 test/gate_level_netlist.v
 xschem/simulation/*.raw
+*.lvs.spice
+lvs.report
