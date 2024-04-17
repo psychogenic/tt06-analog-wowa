@@ -329,6 +329,8 @@ MACRO tt_um_psychogenic_wowa
   PIN uio_out[1]
     DIRECTION OUTPUT ;
     USE SIGNAL ;
+    ANTENNAGATEAREA 415.520691 ;
+    ANTENNADIFFAREA 323.328705 ;
     PORT
       LAYER met4 ;
         RECT 55.510 224.760 55.810 225.760 ;
@@ -337,6 +339,8 @@ MACRO tt_um_psychogenic_wowa
   PIN uio_out[2]
     DIRECTION OUTPUT ;
     USE SIGNAL ;
+    ANTENNAGATEAREA 415.520691 ;
+    ANTENNADIFFAREA 323.328705 ;
     PORT
       LAYER met4 ;
         RECT 51.830 224.760 52.130 225.760 ;
@@ -345,6 +349,8 @@ MACRO tt_um_psychogenic_wowa
   PIN uio_out[3]
     DIRECTION OUTPUT ;
     USE SIGNAL ;
+    ANTENNAGATEAREA 415.520691 ;
+    ANTENNADIFFAREA 323.328705 ;
     PORT
       LAYER met4 ;
         RECT 48.150 224.760 48.450 225.760 ;
