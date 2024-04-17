@@ -49,9 +49,9 @@ x1 VCC VSS USEEXT EN_N EXTTHRESH CAL COMPOUT INPUT b0 b1 b2 b3 b4 b5 b6 b7 wowa_
   write tb_wowa_analog.raw
   reset
   set appendwrite
-  dowhile run < = 65
+  dowhile run < = 10
     save all
-    tran 20n 150u uic
+    tran 50n 150u uic
     write tb_wowa_analog.raw
     let run = run + 1
     reset
@@ -84,7 +84,7 @@ x1 VCC VSS USEEXT EN_N EXTTHRESH CAL COMPOUT INPUT b0 b1 b2 b3 b4 b5 b6 b7 wowa_
 *.ipin VSS
 *.opin COMPOUT
 x1 VCC VSS INPUT THRESH COMPOUT CAL EN_N calibrated_comparator
-*  x2 -  r2r  IS MISSING !!!!
+x2 b0 b1 b2 b3 b4 b5 b6 b7 INTTHRESH VSS VSS r2r
 x3 VCC VSS USEEXT EXTTHRESH THRESH INTTHRESH onehot2mux
 .ends
 
@@ -104,6 +104,40 @@ x1 VCC VSS EN_N ADJ RESULT INSIG THRESHV comparator_stefan
 x2 VCC VSS CALIB ADJ RESULT analogswitch
 x3 VCC VSS CALIB THRESHV INSIG INPUT onehot2mux
 XC1 ADJ VSS sky130_fd_pr__cap_mim_m3_1 W=10 L=10 MF=4 m=4
+.ends
+
+
+* expanding   symbol:  r2r.sym # of pins=11
+** sym_path: /home/ttuser/work/tt06-analog-wowa/xschem/r2r.sym
+** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/r2r.sch
+.subckt r2r b0 b1 b2 b3 b4 b5 b6 b7 out GND VSUBS
+*.ipin b0
+*.ipin b1
+*.ipin b2
+*.ipin b3
+*.ipin b4
+*.ipin b5
+*.ipin b6
+*.ipin b7
+*.opin out
+*.ipin VSUBS
+*.iopin GND
+XR1 net1 b0 VSUBS sky130_fd_pr__res_high_po_0p35 L=40 mult=1 m=1
+XR2 net2 b1 VSUBS sky130_fd_pr__res_high_po_0p35 L=40 mult=1 m=1
+XR3 net3 b2 VSUBS sky130_fd_pr__res_high_po_0p35 L=40 mult=1 m=1
+XR4 net4 b3 VSUBS sky130_fd_pr__res_high_po_0p35 L=40 mult=1 m=1
+XR5 net5 b4 VSUBS sky130_fd_pr__res_high_po_0p35 L=40 mult=1 m=1
+XR6 net6 b5 VSUBS sky130_fd_pr__res_high_po_0p35 L=40 mult=1 m=1
+XR7 net7 b6 VSUBS sky130_fd_pr__res_high_po_0p35 L=40 mult=1 m=1
+XR8 out b7 VSUBS sky130_fd_pr__res_high_po_0p35 L=40 mult=1 m=1
+XR9 net2 net1 VSUBS sky130_fd_pr__res_high_po_0p35 L=20 mult=1 m=1
+XR10 net3 net2 VSUBS sky130_fd_pr__res_high_po_0p35 L=20 mult=1 m=1
+XR11 net4 net3 VSUBS sky130_fd_pr__res_high_po_0p35 L=20 mult=1 m=1
+XR12 net5 net4 VSUBS sky130_fd_pr__res_high_po_0p35 L=20 mult=1 m=1
+XR13 net6 net5 VSUBS sky130_fd_pr__res_high_po_0p35 L=20 mult=1 m=1
+XR14 net7 net6 VSUBS sky130_fd_pr__res_high_po_0p35 L=20 mult=1 m=1
+XR15 out net7 VSUBS sky130_fd_pr__res_high_po_0p35 L=20 mult=1 m=1
+XR16 GND net1 VSUBS sky130_fd_pr__res_high_po_0p35 L=40 mult=1 m=1
 .ends
 
 

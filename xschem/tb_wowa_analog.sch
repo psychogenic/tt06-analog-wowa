@@ -177,9 +177,9 @@ C {devices/code.sym} -960 -160 0 0 {name=stimuli only_toplevel=false value="
   write tb_wowa_analog.raw
   reset
   set appendwrite
-  dowhile run < = 65
+  dowhile run < = 10
     save all
-    tran 20n 150u uic
+    tran 50n 150u uic
     write tb_wowa_analog.raw
     let run = run + 1
     reset

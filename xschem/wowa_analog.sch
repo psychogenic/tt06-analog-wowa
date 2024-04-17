@@ -56,7 +56,7 @@ lab=INTTHRESH}
 N -100 -480 -50 -480 {
 lab=COMPOUT}
 C {calibrated_comparator.sym} -130 -480 0 0 {name=x1}
-C {/home/ttuser/wowa/tt06-analog-r2r-dac/xschem/r2r.sym} -750 -340 0 0 {name=x2}
+C {r2r.sym} -750 -340 0 0 {name=x2}
 C {devices/ipin.sym} -920 -420 0 0 {name=p1 lab=b0}
 C {devices/ipin.sym} -920 -400 0 0 {name=p2 lab=b1}
 C {devices/ipin.sym} -920 -380 0 0 {name=p3 lab=b2}
