@@ -1,7 +1,7 @@
 magic
 tech sky130A
 magscale 1 2
-timestamp 1713397861
+timestamp 1713400686
 << metal1 >>
 rect -18980 -430 -16960 0
 rect -13400 -30 -13200 0
@@ -314,7 +314,7 @@ rect -10350 -6900 -9650 -5920
 rect -10810 -6920 -9650 -6900
 rect -10810 -6950 -10320 -6920
 use comparator_stefan  x1
-timestamp 1713250549
+timestamp 1713400686
 transform 1 0 -28445 0 1 -10990
 box 9445 5990 17870 10730
 use analogswitch  x2

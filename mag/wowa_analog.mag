@@ -1,7 +1,7 @@
 magic
 tech sky130A
 magscale 1 2
-timestamp 1713397861
+timestamp 1713400686
 << viali >>
 rect 6010 26220 6400 26280
 rect 6600 26220 6990 26280
@@ -120,13 +120,13 @@ rect 13720 27320 13740 27651
 rect 14071 27320 14090 27651
 rect 13740 27310 14071 27320
 use calibrated_comparator  x1
-timestamp 1713397861
+timestamp 1713400686
 transform 1 0 33410 0 1 40570
 box -19210 -8770 -7638 510
 use r2r  x2
-timestamp 1713170607
+timestamp 1713400095
 transform 1 0 7200 0 1 23800
-box -2400 2400 3470 17600
+box -2400 2370 3470 17600
 use onehot2mux  x3
 timestamp 1713397861
 transform 0 -1 15320 1 0 28350
