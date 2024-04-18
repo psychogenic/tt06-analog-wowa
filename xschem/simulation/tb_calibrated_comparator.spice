@@ -1,6 +1,7 @@
 ** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/tb_calibrated_comparator.sch
 **.subckt tb_calibrated_comparator
 x1 VCC VSS INPUT THRESHV RESULT CALIB EN_N calibrated_comparator
+x2 VCC VSS INPUT THRESHV RESULT_PARAX CALIB EN_N calibrated_comparator
 **** begin user architecture code
 
 .param mc_mm_switch=1

@@ -23,6 +23,8 @@ drc:
 $(PROJECT_NAME).sim.spice: $(PROJECT_NAME).mag
 	magic -noconsole -dnull tcl/extract_for_sim.tcl $(PROJECT_NAME)
 	rm -f *.ext
+	mv $(PROJECT_NAME).sim.spice ../xschem/extracted
+	mv $(PROJECT_NAME)_parax* ../xschem/extracted
 
 lvs.report: $(PROJECT_NAME).lvs.spice ../src/project.v
 	netgen -batch eval "set project $(PROJECT_NAME) ; source tcl/lvs_netgen.tcl"

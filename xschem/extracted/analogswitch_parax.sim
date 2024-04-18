@@ -1,0 +1,22 @@
+| units: 500000 tech: sky130A format: MIT
+x EN IN OUT VSS s=23200,916 d=23200,916 l=40 w=400 x=6696 y=3930 sky130_fd_pr__nfet_01v8
+x EN VSS x2.GP VSS s=11600,516 d=11600,516 l=30 w=200 x=5530 y=3986 sky130_fd_pr__nfet_01v8_lvt
+x x2.GP IN OUT VCC s=23200,916 d=23200,916 l=40 w=400 x=6696 y=4779 sky130_fd_pr__pfet_01v8
+x EN x2.GP VCC VCC s=23200,916 d=23200,916 l=70 w=400 x=5439 y=4426 sky130_fd_pr__pfet_01v8_lvt
+C EN0 2.5
+R EN 2105
+= EN x1.a
+= EN x2.GN
+R OUT 2522
+= OUT x2.Z
+R IN 2522
+= IN x2.A
+C VCC0 4.5
+R VCC 24298
+= VCC x1.VCCPIN
+= VCC x2.VCCBPIN
+R VSS 23108
+= VSS x1.VSSPIN
+= VSS x2.VSSBPIN
+R x2.GP 2879
+= x2.GP x1.y

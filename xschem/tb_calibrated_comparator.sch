@@ -13,7 +13,7 @@ ypos2=2
 divy=5
 subdivy=1
 unity=1
-x1=1e-11
+x1=9.5e-12
 x2=3.2e-06
 divx=5
 subdivx=1
@@ -34,14 +34,15 @@ ypos2=2
 divy=5
 subdivy=1
 unity=1
-x1=1e-11
+x1=9.5e-12
 x2=3.2e-06
 divx=5
 subdivx=1
 xlabmag=1.0
 ylabmag=1.0
-node=result
-color=7
+node="result
+result_parax"
+color="8 7"
 dataset=-1
 unitx=1
 logx=0
@@ -55,7 +56,7 @@ ypos2=2
 divy=5
 subdivy=1
 unity=1
-x1=1e-11
+x1=9.5e-12
 x2=3.2e-06
 divx=5
 subdivx=1
@@ -76,7 +77,7 @@ ypos2=2
 divy=5
 subdivy=1
 unity=1
-x1=1e-11
+x1=9.5e-12
 x2=3.2e-06
 divx=5
 subdivx=1
@@ -141,3 +142,15 @@ C {devices/launcher.sym} 70 -410 0 0 {name=h5
 descr="load waves" 
 tclcommand="xschem raw_read $netlist_dir/tb_calibrated_comparator.raw tran"}
 C {devices/lab_pin.sym} 80 -180 0 0 {name=p7 lab=EN_N}
+C {calibrated_comparator.sym} 230 180 0 0 {name=x2
+schematic=calibrated_comparator.sim
+spice_sym_def="tcleval(.include [file normalize extracted/calibrated_comparator.sim.spice])"
+tclcommand="textwindow [file normalize extracted/calibrated_comparator.sim.spice]"
+}
+C {devices/lab_pin.sym} 80 240 0 0 {name=p8 lab=VCC}
+C {devices/lab_pin.sym} 80 260 0 0 {name=p9 lab=VSS}
+C {devices/lab_pin.sym} 80 190 0 0 {name=p10 lab=INPUT}
+C {devices/lab_pin.sym} 80 170 0 0 {name=p11 lab=THRESHV}
+C {devices/lab_pin.sym} 260 180 0 1 {name=p12 lab=RESULT_PARAX}
+C {devices/lab_pin.sym} 80 120 0 0 {name=p13 lab=CALIB}
+C {devices/lab_pin.sym} 80 100 0 0 {name=p14 lab=EN_N}

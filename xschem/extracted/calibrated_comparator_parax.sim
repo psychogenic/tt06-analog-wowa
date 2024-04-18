@@ -1,0 +1,109 @@
+| units: 500000 tech: sky130A format: MIT
+x x3.SEL_N INPUT x3.OUT VSS s=23200,916 d=23200,916 l=40 w=400 x=-17213 y=-7559 sky130_fd_pr__nfet_01v8
+x THRESHV x1.G1 x1.inhigh VCC s=92800,3316 d=92800,3316 l=400 w=1600 x=-16318 y=-3560 sky130_fd_pr__pfet_01v8_lvt
+x x2.OUT VSS s=4933760,8904 l=2000 w=2000 x=-9969 y=-3969 sky130_fd_pr__cap_mim_m3_1
+x x3.SEL_N x3.OUT THRESHV VCC s=23200,916 d=23200,916 l=40 w=400 x=-15340 y=-7535 sky130_fd_pr__pfet_01v8
+x EN_N x1.p2p VCC VCC s=11600,516 d=11600,516 l=1600 w=200 x=-18638 y=-1440 sky130_fd_pr__pfet_01v8
+x x3.OUT x1.inhigh x1.G2 VCC s=92800,3316 d=92800,3316 l=400 w=1600 x=-15258 y=-3560 sky130_fd_pr__pfet_01v8_lvt
+x x2.OUT VSS s=5493360,10564 l=2000 w=2000 x=-9969 y=-6289 sky130_fd_pr__cap_mim_m3_1
+x x1.G1 VSS x1.pg2g VSS s=23200,916 d=23200,916 l=800 w=400 x=-14108 y=-3369 sky130_fd_pr__nfet_01v8_lvt
+x EN_N RESULT VSS VSS s=11600,516 d=11600,516 l=30 w=200 x=-11108 y=-3309 sky130_fd_pr__nfet_01v8
+x x1.pg2g RESULT x1.mirhigh VCC s=46400,1716 d=46400,1716 l=800 w=800 x=-12668 y=-2450 sky130_fd_pr__pfet_01v8_lvt
+x CALIB INPUT x3.OUT VCC s=23200,916 d=23200,916 l=40 w=400 x=-17213 y=-6710 sky130_fd_pr__pfet_01v8
+x x1.G2 RESULT VSS VSS s=23200,916 d=23200,916 l=800 w=400 x=-12668 y=-3369 sky130_fd_pr__nfet_01v8_lvt
+x x1.pg2g x1.mirhigh x1.pg2g VCC s=46400,1716 d=46400,1716 l=800 w=800 x=-14138 y=-2450 sky130_fd_pr__pfet_01v8_lvt
+x CALIB VSS x2.x2.GP VSS s=11600,516 d=11600,516 l=30 w=200 x=-13089 y=-8133 sky130_fd_pr__nfet_01v8_lvt
+x x2.OUT VSS s=4933760,8904 l=2000 w=2000 x=-9969 y=-1649 sky130_fd_pr__cap_mim_m3_1
+x VCC VSS x1.n2n VSS s=5800,316 d=5800,316 l=1600 w=100 x=-18598 y=-3219 sky130_fd_pr__nfet_01v8_lvt
+x CALIB VSS x3.SEL_N VSS s=11600,516 d=11600,516 l=30 w=200 x=-16199 y=-6603 sky130_fd_pr__nfet_01v8_lvt
+x x1.G1 x1.G1 VSS VSS s=23200,916 d=23200,916 l=800 w=400 x=-16598 y=-4429 sky130_fd_pr__nfet_01v8_lvt
+x CALIB RESULT x2.OUT VSS s=23200,916 d=23200,916 l=40 w=400 x=-11923 y=-8189 sky130_fd_pr__nfet_01v8
+x EN_N VCC x1.inhigh VCC s=23200,916 d=23200,916 l=1600 w=400 x=-16388 y=-1250 sky130_fd_pr__pfet_01v8
+x CALIB x2.x2.GP VCC VCC s=23200,916 d=23200,916 l=70 w=400 x=-13180 y=-7693 sky130_fd_pr__pfet_01v8_lvt
+x EN_N x1.mirhigh VCC VCC s=58000,2116 d=58000,2116 l=30 w=1000 x=-14115 y=-923 sky130_fd_pr__pfet_01v8
+x CALIB x3.SEL_N VCC VCC s=23200,916 d=23200,916 l=70 w=400 x=-16290 y=-6163 sky130_fd_pr__pfet_01v8_lvt
+x x2.OUT x1.p2p x1.G1 VCC s=11600,516 d=11600,516 l=200 w=200 x=-18518 y=-2380 sky130_fd_pr__pfet_01v8_lvt
+x x2.OUT x1.n2n x1.G1 VSS s=5800,316 d=5800,316 l=200 w=100 x=-17358 y=-2369 sky130_fd_pr__nfet_01v8_lvt
+x x1.G2 VSS x1.G2 VSS s=23200,916 d=23200,916 l=800 w=400 x=-15408 y=-4429 sky130_fd_pr__nfet_01v8_lvt
+x CALIB x3.OUT THRESHV VSS s=23200,916 d=23200,916 l=40 w=400 x=-16189 y=-7535 sky130_fd_pr__nfet_01v8
+x x2.x2.GP RESULT x2.OUT VCC s=23200,916 d=23200,916 l=40 w=400 x=-11923 y=-7340 sky130_fd_pr__pfet_01v8
+x x2.OUT VSS s=5537860,10944 l=2000 w=2000 x=-9969 y=-8609 sky130_fd_pr__cap_mim_m3_1
+C x2.OUT VCC 2.1
+C VCC x1.pg2g 3.8
+C x1.inhigh VCC 2.0
+C VCC x3.OUT 2.8
+C THRESHV x3.SEL_N 2.1
+C x1.mirhigh VCC 3.9
+C VCC EN_N 11.4
+C VCC CALIB 4.0
+C THRESHV CALIB 2.0
+R INPUT 2523
+= INPUT x3.x3.A
+= INPUT x3.IN0
+C CALIB0 8.7
+R CALIB 5276
+= CALIB x2.x1.a
+= CALIB x2.x2.GN
+= CALIB x2.EN
+= CALIB x3.x1.a
+= CALIB x3.x2.GN
+= CALIB x3.x3.GP
+= CALIB x3.SEL
+C RESULT0 7.0
+R RESULT 8064
+= RESULT x1.DIFFOUT
+= RESULT x2.x2.A
+= RESULT x2.IN
+C THRESHV0 5.0
+R THRESHV 3100
+= THRESHV x1.MINUS
+= THRESHV x3.x2.A
+= THRESHV x3.IN1
+C EN_N0 8.0
+R EN_N 3661
+= EN_N x1.EN_N
+C VCC0 64.4
+R VCC 237459
+= VCC x2.x1.VCCPIN
+= VCC x2.x2.VCCBPIN
+= VCC x2.VCC
+= VCC x3.x1.VCCPIN
+= VCC x3.x2.VCCBPIN
+= VCC x3.x3.VCCBPIN
+= VCC x3.VCC
+= VCC x1.VCC
+R VSS 193002
+= VSS x1.VSS
+= VSS x2.x1.VSSPIN
+= VSS x2.x2.VSSBPIN
+= VSS x2.VSS
+= VSS x3.x1.VSSPIN
+= VSS x3.x2.VSSBPIN
+= VSS x3.x3.VSSBPIN
+= VSS x3.VSS
+R x2.x2.GP 2879
+= x2.x2.GP x2.x1.y
+C x3.SEL_N0 3.4
+R x3.SEL_N 3806
+= x3.SEL_N x3.x1.y
+= x3.SEL_N x3.x2.GP
+= x3.SEL_N x3.x3.GN
+C x1.pg2g0 2.7
+R x1.pg2g 5629
+C x1.G20 9.1
+R x1.G2 8658
+C x3.OUT0 5.7
+R x3.OUT 6353
+= x3.OUT x1.PLUS
+= x3.OUT x3.x2.Z
+= x3.OUT x3.x3.Z
+R x1.n2n 891
+C x1.G10 8.0
+R x1.G1 10420
+C x2.OUT0 53.8
+R x2.OUT 3249
+= x2.OUT x1.ADJ
+= x2.OUT x2.x2.Z
+R x1.mirhigh 10704
+R x1.inhigh 14462
+R x1.p2p 2034

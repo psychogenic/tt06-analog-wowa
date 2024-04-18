@@ -13,8 +13,8 @@ ypos2=2
 divy=5
 subdivy=1
 unity=1
-x1=5.00094e-08
-x2=1.05e-06
+x1=-4.99896e-08
+x2=9.50001e-07
 divx=5
 subdivx=1
 xlabmag=1.0
@@ -34,8 +34,8 @@ ypos2=2
 divy=5
 subdivy=1
 unity=1
-x1=5.00094e-08
-x2=1.05e-06
+x1=-4.99896e-08
+x2=9.50001e-07
 divx=5
 subdivx=1
 xlabmag=1.0
@@ -48,6 +48,29 @@ logx=0
 logy=0
 color=4
 node=y}
+B 2 550 200 1350 600 {flags=graph
+y1=0
+y2=2
+ypos1=0
+ypos2=2
+divy=5
+subdivy=1
+unity=1
+x1=-4.99896e-08
+x2=9.50001e-07
+divx=5
+subdivx=1
+xlabmag=1.0
+ylabmag=1.0
+
+
+dataset=-1
+unitx=1
+logx=0
+logy=0
+color="4 7"
+node="y
+y_parax"}
 C {lvtnot.sym} 40 -20 0 0 {name=x1}
 C {devices/lab_pin.sym} 0 -20 0 0 {name=p1 lab=a}
 C {devices/lab_pin.sym} 80 -20 0 1 {name=p2 lab=y}
@@ -98,3 +121,12 @@ C {devices/launcher.sym} 60 -120 0 0 {name=h5
 descr="load waves" 
 tclcommand="xschem raw_read $netlist_dir/tb_lvtnot.raw tran"
 }
+C {lvtnot.sym} 320 -20 0 0 {name=x2
+schematic=lvtnot_parax.sim
+spice_sym_def="tcleval(.include [file normalize extracted/lvtnot.sim.spice])"
+tclcommand="textwindow [file normalize extracted/lvtnot.sim.spice]"
+}
+C {devices/lab_pin.sym} 280 -20 0 0 {name=p5 lab=a}
+C {devices/lab_pin.sym} 360 -20 0 1 {name=p6 lab=y_parax}
+C {devices/lab_pin.sym} 310 -50 0 0 {name=p7 lab=VCC}
+C {devices/lab_pin.sym} 310 10 0 0 {name=p8 lab=VSS}

@@ -1,0 +1,7 @@
+| units: 500000 tech: sky130A format: MIT
+x a y VCCPIN VCCPIN s=23200,916 d=23200,916 l=70 w=400 x=1619 y=1036 sky130_fd_pr__pfet_01v8_lvt
+x a VSSPIN y VSSPIN s=11600,516 d=11600,516 l=30 w=200 x=1710 y=596 sky130_fd_pr__nfet_01v8_lvt
+R y 2033
+R a 1200
+R VCCPIN 11438
+R VSSPIN 10284
