@@ -42,7 +42,7 @@ module tt_um_psychogenic_wowa(
         );
 
 
-    wowa_analog(
+    wowa_analog wowa_analog(
         .b0(dac_set[0]),
         .b1(dac_set[1]),
         .b2(dac_set[2]),
