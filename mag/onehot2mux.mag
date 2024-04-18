@@ -1,7 +1,14 @@
 magic
 tech sky130A
 magscale 1 2
-timestamp 1713397861
+timestamp 1713420955
+<< error_s >>
+rect 1090 2650 1190 2740
+rect 1090 2210 1210 2650
+rect 1100 2000 1210 2210
+rect 230 1970 1320 2000
+rect 70 1890 1320 1970
+rect 70 1860 790 1890
 << locali >>
 rect 960 3040 1300 3250
 rect 960 2750 1830 3040
@@ -254,15 +261,15 @@ rect 620 2076 2906 2153
 rect 3134 2076 3135 2304
 rect 620 2075 3135 2076
 use lvtnot  x1
-timestamp 1713131393
+timestamp 1713420648
 transform 1 0 -260 0 1 2580
 box 1400 340 2238 1340
 use passgate  x2
-timestamp 1713131218
+timestamp 1713420955
 transform 0 1 1750 -1 0 4980
 box 2200 -700 3200 1400
 use passgate  x3
-timestamp 1713131218
+timestamp 1713420955
 transform 1 0 -2260 0 1 2510
 box 2200 -700 3200 1400
 << labels >>

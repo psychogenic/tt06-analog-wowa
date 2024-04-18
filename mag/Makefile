@@ -1,4 +1,4 @@
-PROJECT_NAME ?= tt_um_psychogenic_comparator
+PROJECT_NAME ?= tt_um_psychogenic_wowa
 MAGIC_RC := $(PDK_ROOT)/sky130A/libs.tech/magic/sky130A.magicrc
 
 .PHONY: lvs magic start
