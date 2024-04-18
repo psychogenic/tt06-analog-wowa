@@ -22,9 +22,10 @@ module tt_um_psychogenic_wowa(
   wire do_calibrate;
   wire comparator_nenable;
   wire comparator_output;
+  wire external_threshold;
 
   wowa_digital wowa_digital(
-        .clk(clk),                  // expect a 10M clock
+        .clk(clk),   
 	.rst(ui_in[0]),
 	.calib_enable(ui_in[1]),
 	.user_enable(ui_in[2]),
@@ -53,27 +54,29 @@ module tt_um_psychogenic_wowa(
 	.USEEXT(threshold_select),
 	.CAL(do_calibrate),
 	.EN_N(comparator_nenable),
+	.INPUT(ua[4]),
+	.DACOUT(ua[5]),
 	.COMPOUT(comparator_output),
+	.EXTTHRESH(external_threshold),
         .VCC(VPWR),
         .VSS(VGND)
         );
 
+    p3_opamp p3_opamp(
+	    .PLUS(ua[2]),
+	    .MINUS(external_threshold),
+	    .VOUT(ua[1]),
+
+	    .VDD(VPWR),
+            .VSS(VGND)
+    );
 
 
 
 
-    wire [7:0] r2r_out;
+    assign ua[0] = comparator_output;
+    assign ua[3] = external_threshold;
 
-    r2r_dac_control r2r_dac_control(
-        .clk(clk),                  // expect a 10M clock
-        .n_rst(rst_n),
-        .ext_data(uio_in[0]),       // if this is high, then DAC data comes from ui_in[7:0]
-        .load_divider(uio_in[1]),   // load value set on data to the clock divider
-        .data(ui_in),               // connect to ui_in[7:0]
-        .r2r_out(r2r_out),          // 8 bit out to the R2R DAC
-        .VPWR(VPWR),
-        .VGND(VGND)
-        );
    
     assign uio_out[1] = VGND;
     assign uio_out[2] = VGND;

@@ -1,5 +1,6 @@
 ** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/tb_wowa_analog.sch
-**.subckt tb_wowa_analog
+.subckt tb_wowa_analog
+
 V1 b3 GND pulse(0 1.8 0 0 0 8u 16u)
 V2 b2 GND pulse(0 1.8 0 0 0 4u 8u)
 V3 b1 GND pulse(0 1.8 0 0 0 2u 4u)
@@ -8,7 +9,7 @@ V5 b7 GND pulse(0 1.8 0 0 0 128u 256u)
 V6 b6 GND pulse(0 1.8 0 0 0 64u 128u)
 V7 b5 GND pulse(0 1.8 0 0 0 32u 64u)
 V8 b4 GND pulse(0 1.8 0 0 0 16u 32u)
-x1 VCC VSS USEEXT EN_N EXTTHRESH CAL COMPOUT INPUT b0 b1 b2 b3 b4 b5 b6 b7 wowa_analog
+x1 VCC VSS USEEXT EN_N EXTTHRESH CAL COMPOUT INPUT b0 b1 b2 b3 b4 b5 b6 b7 DACOUT wowa_analog
 **** begin user architecture code
 
 .param mc_mm_switch=1
@@ -49,7 +50,7 @@ x1 VCC VSS USEEXT EN_N EXTTHRESH CAL COMPOUT INPUT b0 b1 b2 b3 b4 b5 b6 b7 wowa_
   write tb_wowa_analog.raw
   reset
   set appendwrite
-  dowhile run < = 10
+  dowhile run < = 5
     save all
     tran 50n 150u uic
     write tb_wowa_analog.raw
@@ -61,31 +62,17 @@ x1 VCC VSS USEEXT EN_N EXTTHRESH CAL COMPOUT INPUT b0 b1 b2 b3 b4 b5 b6 b7 wowa_
 
 
 **** end user architecture code
-**.ends
+.ends
 
-* expanding   symbol:  wowa_analog.sym # of pins=16
+* expanding   symbol:  wowa_analog.sym # of pins=17
 ** sym_path: /home/ttuser/work/tt06-analog-wowa/xschem/wowa_analog.sym
 ** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/wowa_analog.sch
-.subckt wowa_analog VCC VSS USEEXT EN_N EXTTHRESH CAL COMPOUT INPUT b0 b1 b2 b3 b4 b5 b6 b7
-*.ipin b0
-*.ipin b1
-*.ipin b2
-*.ipin b3
-*.ipin b4
-*.ipin b5
-*.ipin b6
-*.ipin b7
-*.ipin EN_N
-*.ipin CAL
-*.ipin INPUT
-*.ipin EXTTHRESH
-*.ipin USEEXT
-*.ipin VCC
-*.ipin VSS
-*.opin COMPOUT
+.subckt wowa_analog VCC VSS USEEXT EN_N EXTTHRESH CAL COMPOUT INPUT b0 b1 b2 b3 b4 b5 b6 b7 DACOUT
+*.PININFO b0:I b1:I b2:I b3:I b4:I b5:I b6:I b7:I EN_N:I CAL:I INPUT:I EXTTHRESH:I USEEXT:I VCC:I
+*+ VSS:I COMPOUT:O DACOUT:O
 x1 VCC VSS INPUT THRESH COMPOUT CAL EN_N calibrated_comparator
-x2 b0 b1 b2 b3 b4 b5 b6 b7 INTTHRESH VSS VSS r2r
-x3 VCC VSS USEEXT EXTTHRESH THRESH INTTHRESH onehot2mux
+x2 b0 b1 b2 b3 b4 b5 b6 b7 DACOUT VSS VSS r2r
+x3 VCC VSS USEEXT EXTTHRESH THRESH DACOUT onehot2mux
 .ends
 
 
@@ -93,17 +80,11 @@ x3 VCC VSS USEEXT EXTTHRESH THRESH INTTHRESH onehot2mux
 ** sym_path: /home/ttuser/work/tt06-analog-wowa/xschem/calibrated_comparator.sym
 ** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/calibrated_comparator.sch
 .subckt calibrated_comparator VCC VSS INPUT THRESHV RESULT CALIB EN_N
-*.ipin VCC
-*.ipin VSS
-*.ipin INPUT
-*.ipin THRESHV
-*.ipin CALIB
-*.opin RESULT
-*.ipin EN_N
+*.PININFO VCC:I VSS:I INPUT:I THRESHV:I CALIB:I RESULT:O EN_N:I
 x1 VCC VSS EN_N ADJ RESULT INSIG THRESHV comparator_stefan
 x2 VCC VSS CALIB ADJ RESULT analogswitch
 x3 VCC VSS CALIB THRESHV INSIG INPUT onehot2mux
-XC1 ADJ VSS sky130_fd_pr__cap_mim_m3_1 W=10 L=10 MF=4 m=4
+XC1 ADJ VSS sky130_fd_pr__cap_mim_m3_1 W=10 L=10 m=4
 .ends
 
 
@@ -111,17 +92,7 @@ XC1 ADJ VSS sky130_fd_pr__cap_mim_m3_1 W=10 L=10 MF=4 m=4
 ** sym_path: /home/ttuser/work/tt06-analog-wowa/xschem/r2r.sym
 ** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/r2r.sch
 .subckt r2r b0 b1 b2 b3 b4 b5 b6 b7 out GND VSUBS
-*.ipin b0
-*.ipin b1
-*.ipin b2
-*.ipin b3
-*.ipin b4
-*.ipin b5
-*.ipin b6
-*.ipin b7
-*.opin out
-*.ipin VSUBS
-*.iopin GND
+*.PININFO b0:I b1:I b2:I b3:I b4:I b5:I b6:I b7:I out:O VSUBS:I GND:B
 XR1 net1 b0 VSUBS sky130_fd_pr__res_high_po_0p35 L=40 mult=1 m=1
 XR2 net2 b1 VSUBS sky130_fd_pr__res_high_po_0p35 L=40 mult=1 m=1
 XR3 net3 b2 VSUBS sky130_fd_pr__res_high_po_0p35 L=40 mult=1 m=1
@@ -145,12 +116,7 @@ XR16 GND net1 VSUBS sky130_fd_pr__res_high_po_0p35 L=40 mult=1 m=1
 ** sym_path: /home/ttuser/work/tt06-analog-wowa/xschem/onehot2mux.sym
 ** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/onehot2mux.sch
 .subckt onehot2mux VCC VSS SEL IN1 OUT IN0
-*.ipin SEL
-*.ipin IN0
-*.ipin IN1
-*.opin OUT
-*.ipin VCC
-*.ipin VSS
+*.PININFO SEL:I IN0:I IN1:I OUT:O VCC:I VSS:I
 x2 OUT IN1 SEL_N SEL VSS VCC passgate
 x3 OUT IN0 SEL SEL_N VSS VCC passgate
 x1 SEL SEL_N VCC VSS lvtnot
@@ -161,58 +127,22 @@ x1 SEL SEL_N VCC VSS lvtnot
 ** sym_path: /home/ttuser/work/tt06-analog-wowa/xschem/comparator_stefan.sym
 ** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/comparator_stefan.sch
 .subckt comparator_stefan VCC VSS EN_N ADJ DIFFOUT PLUS MINUS
-*.ipin PLUS
-*.ipin MINUS
-*.ipin VCC
-*.ipin VSS
-*.ipin EN_N
-*.ipin ADJ
-*.opin DIFFOUT
-XM1 inhigh EN_N VCC VCC sky130_fd_pr__pfet_01v8 L=8 W=2 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
-+ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
-+ sa=0 sb=0 sd=0 mult=1 m=1
-XM2 G1 MINUS inhigh VCC sky130_fd_pr__pfet_01v8_lvt L=2 W=8 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
-+ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
-+ sa=0 sb=0 sd=0 mult=1 m=1
-XM3 inhigh PLUS G2 VCC sky130_fd_pr__pfet_01v8_lvt L=2 W=8 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
-+ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
-+ sa=0 sb=0 sd=0 mult=1 m=1
-XM4 G2 G2 VSS VSS sky130_fd_pr__nfet_01v8_lvt L=4 W=2 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
-+ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
-+ sa=0 sb=0 sd=0 mult=1 m=1
-XM5 VSS G1 G1 VSS sky130_fd_pr__nfet_01v8_lvt L=4 W=2 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
-+ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
-+ sa=0 sb=0 sd=0 mult=1 m=1
-XM6 pg2g G1 VSS VSS sky130_fd_pr__nfet_01v8_lvt L=4 W=2 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
-+ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
-+ sa=0 sb=0 sd=0 mult=1 m=1
-XM7 mirhigh pg2g pg2g VCC sky130_fd_pr__pfet_01v8_lvt L=4 W=4 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
-+ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
-+ sa=0 sb=0 sd=0 mult=1 m=1
-XM8 DIFFOUT pg2g mirhigh VCC sky130_fd_pr__pfet_01v8_lvt L=4 W=4 nf=1 ad='int((nf+1)/2) * W/nf * 0.29'
-+ as='int((nf+2)/2) * W/nf * 0.29' pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)'
-+ nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
-XM9 mirhigh EN_N VCC VCC sky130_fd_pr__pfet_01v8 L=0.15 W=5 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
-+ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
-+ sa=0 sb=0 sd=0 mult=1 m=1
-XM10 DIFFOUT G2 VSS VSS sky130_fd_pr__nfet_01v8_lvt L=4 W=2 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
-+ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
-+ sa=0 sb=0 sd=0 mult=1 m=1
-XM11 DIFFOUT EN_N VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
-+ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
-+ sa=0 sb=0 sd=0 mult=1 m=1
-XM12 p2p EN_N VCC VCC sky130_fd_pr__pfet_01v8 L=8 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
-+ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
-+ sa=0 sb=0 sd=0 mult=1 m=1
-XM13 G1 ADJ p2p VCC sky130_fd_pr__pfet_01v8_lvt L=1 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
-+ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
-+ sa=0 sb=0 sd=0 mult=1 m=1
-XM14 G1 ADJ n2n VSS sky130_fd_pr__nfet_01v8_lvt L=1 W=0.5 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
-+ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
-+ sa=0 sb=0 sd=0 mult=1 m=1
-XM15 n2n VCC VSS VSS sky130_fd_pr__nfet_01v8_lvt L=8 W=0.5 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
-+ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
-+ sa=0 sb=0 sd=0 mult=1 m=1
+*.PININFO PLUS:I MINUS:I VCC:I VSS:I EN_N:I ADJ:I DIFFOUT:O
+XM1 inhigh EN_N VCC VCC sky130_fd_pr__pfet_01v8 L=8 W=2 nf=1 m=1
+XM2 G1 MINUS inhigh VCC sky130_fd_pr__pfet_01v8_lvt L=2 W=8 nf=1 m=1
+XM3 inhigh PLUS G2 VCC sky130_fd_pr__pfet_01v8_lvt L=2 W=8 nf=1 m=1
+XM4 G2 G2 VSS VSS sky130_fd_pr__nfet_01v8_lvt L=4 W=2 nf=1 m=1
+XM5 VSS G1 G1 VSS sky130_fd_pr__nfet_01v8_lvt L=4 W=2 nf=1 m=1
+XM6 pg2g G1 VSS VSS sky130_fd_pr__nfet_01v8_lvt L=4 W=2 nf=1 m=1
+XM7 mirhigh pg2g pg2g VCC sky130_fd_pr__pfet_01v8_lvt L=4 W=4 nf=1 m=1
+XM8 DIFFOUT pg2g mirhigh VCC sky130_fd_pr__pfet_01v8_lvt L=4 W=4 nf=1 m=1
+XM9 mirhigh EN_N VCC VCC sky130_fd_pr__pfet_01v8 L=0.15 W=5 nf=1 m=1
+XM10 DIFFOUT G2 VSS VSS sky130_fd_pr__nfet_01v8_lvt L=4 W=2 nf=1 m=1
+XM11 DIFFOUT EN_N VSS VSS sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 m=1
+XM12 p2p EN_N VCC VCC sky130_fd_pr__pfet_01v8 L=8 W=1 nf=1 m=1
+XM13 G1 ADJ p2p VCC sky130_fd_pr__pfet_01v8_lvt L=1 W=1 nf=1 m=1
+XM14 G1 ADJ n2n VSS sky130_fd_pr__nfet_01v8_lvt L=1 W=0.5 nf=1 m=1
+XM15 n2n VCC VSS VSS sky130_fd_pr__nfet_01v8_lvt L=8 W=0.5 nf=1 m=1
 .ends
 
 
@@ -220,11 +150,7 @@ XM15 n2n VCC VSS VSS sky130_fd_pr__nfet_01v8_lvt L=8 W=0.5 nf=1 ad='int((nf+1)/2
 ** sym_path: /home/ttuser/work/tt06-analog-wowa/xschem/analogswitch.sym
 ** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/analogswitch.sch
 .subckt analogswitch VCC VSS EN OUT IN
-*.ipin EN
-*.ipin IN
-*.opin OUT
-*.ipin VCC
-*.ipin VSS
+*.PININFO EN:I IN:I OUT:O VCC:I VSS:I
 x2 OUT IN EN_N EN VSS VCC passgate
 x1 EN EN_N VCC VSS lvtnot
 .ends
@@ -234,18 +160,9 @@ x1 EN EN_N VCC VSS lvtnot
 ** sym_path: /home/ttuser/work/tt06-analog-wowa/xschem/passgate.sym
 ** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/passgate.sch
 .subckt passgate Z A GP GN VSSBPIN VCCBPIN
-*.iopin A
-*.iopin Z
-*.ipin GP
-*.ipin GN
-*.ipin VCCBPIN
-*.ipin VSSBPIN
-XM1 Z GN A VSSBPIN sky130_fd_pr__nfet_01v8 L=0.2 W=2 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
-+ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
-+ sa=0 sb=0 sd=0 mult=1 m=1
-XM2 Z GP A VCCBPIN sky130_fd_pr__pfet_01v8 L=0.2 W=2 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
-+ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
-+ sa=0 sb=0 sd=0 mult=1 m=1
+*.PININFO A:B Z:B GP:I GN:I VCCBPIN:I VSSBPIN:I
+XM1 Z GN A VSSBPIN sky130_fd_pr__nfet_01v8 L=0.2 W=2 nf=1 m=1
+XM2 Z GP A VCCBPIN sky130_fd_pr__pfet_01v8 L=0.2 W=2 nf=1 m=1
 .ends
 
 
@@ -253,16 +170,9 @@ XM2 Z GP A VCCBPIN sky130_fd_pr__pfet_01v8 L=0.2 W=2 nf=1 ad='int((nf+1)/2) * W/
 ** sym_path: /home/ttuser/work/tt06-analog-wowa/xschem/lvtnot.sym
 ** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/lvtnot.sch
 .subckt lvtnot a y VCCPIN VSSPIN
-*.opin y
-*.ipin a
-*.ipin VCCPIN
-*.ipin VSSPIN
-XM2 y a VCCPIN VCCPIN sky130_fd_pr__pfet_01v8_lvt L=0.35 W=2 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
-+ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
-+ sa=0 sb=0 sd=0 mult=1 m=1
-XM1 y a VSSPIN VSSPIN sky130_fd_pr__nfet_01v8_lvt L=0.15 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
-+ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
-+ sa=0 sb=0 sd=0 mult=1 m=1
+*.PININFO y:O a:I VCCPIN:I VSSPIN:I
+XM2 y a VCCPIN VCCPIN sky130_fd_pr__pfet_01v8_lvt L=0.35 W=2 nf=1 m=1
+XM1 y a VSSPIN VSSPIN sky130_fd_pr__nfet_01v8_lvt L=0.15 W=1 nf=1 m=1
 .ends
 
 .GLOBAL GND

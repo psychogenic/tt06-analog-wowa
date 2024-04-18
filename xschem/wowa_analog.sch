@@ -52,7 +52,7 @@ lab=VSS}
 N -580 -400 -580 -380 {
 lab=VSS}
 N -600 -420 -570 -420 {
-lab=INTTHRESH}
+lab=DACOUT}
 N -100 -480 -50 -480 {
 lab=COMPOUT}
 C {calibrated_comparator.sym} -130 -480 0 0 {name=x1}
@@ -74,13 +74,13 @@ C {devices/ipin.sym} -920 -540 0 0 {name=p12 lab=EXTTHRESH}
 C {devices/lab_pin.sym} -310 -490 0 0 {name=p13 sig_type=std_logic lab=THRESH}
 C {devices/lab_pin.sym} -680 -570 2 0 {name=p14 sig_type=std_logic lab=THRESH}
 C {devices/ipin.sym} -920 -600 0 0 {name=p15 lab=USEEXT}
-C {devices/lab_pin.sym} -920 -570 0 0 {name=p16 sig_type=std_logic lab=INTTHRESH}
+C {devices/lab_pin.sym} -920 -570 0 0 {name=p16 sig_type=std_logic lab=DACOUT}
 C {devices/ipin.sym} -870 -710 0 0 {name=p17 lab=VCC}
 C {devices/lab_pin.sym} -910 -500 0 0 {name=p18 sig_type=std_logic lab=VCC}
 C {devices/lab_pin.sym} -910 -480 0 0 {name=p19 sig_type=std_logic lab=VSS}
 C {devices/lab_pin.sym} -290 -400 0 0 {name=p20 sig_type=std_logic lab=VSS}
 C {devices/lab_pin.sym} -290 -420 0 0 {name=p21 sig_type=std_logic lab=VCC}
 C {devices/lab_pin.sym} -570 -380 2 0 {name=p22 sig_type=std_logic lab=VSS}
-C {devices/lab_pin.sym} -570 -420 2 0 {name=p23 sig_type=std_logic lab=INTTHRESH}
 C {devices/ipin.sym} -870 -690 0 0 {name=p24 lab=VSS}
 C {devices/opin.sym} -50 -480 0 0 {name=p25 lab=COMPOUT}
+C {devices/opin.sym} -570 -420 0 0 {name=p26 lab=DACOUT}

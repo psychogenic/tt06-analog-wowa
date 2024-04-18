@@ -19,7 +19,7 @@ divx=5
 subdivx=1
 xlabmag=1.0
 ylabmag=1.0
-node="x1.thresh
+node="DACOUT
 compout"
 color="4 7"
 dataset=-1
@@ -177,7 +177,7 @@ C {devices/code.sym} -960 -160 0 0 {name=stimuli only_toplevel=false value="
   write tb_wowa_analog.raw
   reset
   set appendwrite
-  dowhile run < = 10
+  dowhile run < = 5
     save all
     tran 50n 150u uic
     write tb_wowa_analog.raw
@@ -191,3 +191,4 @@ C {devices/launcher.sym} -210 -260 0 0 {name=h5
 descr="load waves" 
 tclcommand="xschem raw_read $netlist_dir/tb_wowa_analog.raw tran"
 }
+C {devices/lab_pin.sym} -260 10 0 1 {name=p25 lab=DACOUT}

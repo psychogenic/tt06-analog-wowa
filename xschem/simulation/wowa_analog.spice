@@ -1,15 +1,15 @@
-** sch_path: /home/ttuser/wowa/xschem/wowa_analog.sch
-.subckt wowa_analog b0 b1 b2 b3 b4 b5 b6 b7 EN_N CAL INPUT EXTTHRESH USEEXT VCC VSS COMPOUT
+** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/wowa_analog.sch
+.subckt wowa_analog b0 b1 b2 b3 b4 b5 b6 b7 EN_N CAL INPUT EXTTHRESH USEEXT VCC VSS COMPOUT DACOUT
 *.PININFO b0:I b1:I b2:I b3:I b4:I b5:I b6:I b7:I EN_N:I CAL:I INPUT:I EXTTHRESH:I USEEXT:I VCC:I
-*+ VSS:I COMPOUT:O
+*+ VSS:I COMPOUT:O DACOUT:O
 x1 VCC VSS INPUT THRESH COMPOUT CAL EN_N calibrated_comparator
-x2 b0 b1 b2 b3 b4 b5 b6 b7 INTTHRESH VSS VSS r2r
-x3 VCC VSS USEEXT EXTTHRESH THRESH INTTHRESH onehot2mux
+x2 b0 b1 b2 b3 b4 b5 b6 b7 DACOUT VSS VSS r2r
+x3 VCC VSS USEEXT EXTTHRESH THRESH DACOUT onehot2mux
 .ends
 
-* expanding   symbol:  /home/ttuser/wowa/xschem/calibrated_comparator.sym # of pins=7
-** sym_path: /home/ttuser/wowa/xschem/calibrated_comparator.sym
-** sch_path: /home/ttuser/wowa/xschem/calibrated_comparator.sch
+* expanding   symbol:  calibrated_comparator.sym # of pins=7
+** sym_path: /home/ttuser/work/tt06-analog-wowa/xschem/calibrated_comparator.sym
+** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/calibrated_comparator.sch
 .subckt calibrated_comparator VCC VSS INPUT THRESHV RESULT CALIB EN_N
 *.PININFO VCC:I VSS:I INPUT:I THRESHV:I CALIB:I RESULT:O EN_N:I
 x1 VCC VSS EN_N ADJ RESULT INSIG THRESHV comparator_stefan
@@ -19,9 +19,9 @@ XC1 ADJ VSS sky130_fd_pr__cap_mim_m3_1 W=10 L=10 m=4
 .ends
 
 
-* expanding   symbol:  /home/ttuser/wowa/tt06-analog-r2r-dac/xschem/r2r.sym # of pins=11
-** sym_path: /home/ttuser/wowa/tt06-analog-r2r-dac/xschem/r2r.sym
-** sch_path: /home/ttuser/wowa/tt06-analog-r2r-dac/xschem/r2r.sch
+* expanding   symbol:  r2r.sym # of pins=11
+** sym_path: /home/ttuser/work/tt06-analog-wowa/xschem/r2r.sym
+** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/r2r.sch
 .subckt r2r b0 b1 b2 b3 b4 b5 b6 b7 out GND VSUBS
 *.PININFO b0:I b1:I b2:I b3:I b4:I b5:I b6:I b7:I out:O VSUBS:I GND:B
 XR1 net1 b0 VSUBS sky130_fd_pr__res_high_po_0p35 L=40 mult=1 m=1
@@ -43,9 +43,9 @@ XR16 GND net1 VSUBS sky130_fd_pr__res_high_po_0p35 L=40 mult=1 m=1
 .ends
 
 
-* expanding   symbol:  /home/ttuser/wowa/xschem/onehot2mux.sym # of pins=6
-** sym_path: /home/ttuser/wowa/xschem/onehot2mux.sym
-** sch_path: /home/ttuser/wowa/xschem/onehot2mux.sch
+* expanding   symbol:  onehot2mux.sym # of pins=6
+** sym_path: /home/ttuser/work/tt06-analog-wowa/xschem/onehot2mux.sym
+** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/onehot2mux.sch
 .subckt onehot2mux VCC VSS SEL IN1 OUT IN0
 *.PININFO SEL:I IN0:I IN1:I OUT:O VCC:I VSS:I
 x2 OUT IN1 SEL_N SEL VSS VCC passgate
@@ -54,9 +54,9 @@ x1 SEL SEL_N VCC VSS lvtnot
 .ends
 
 
-* expanding   symbol:  /home/ttuser/wowa/xschem/comparator_stefan.sym # of pins=7
-** sym_path: /home/ttuser/wowa/xschem/comparator_stefan.sym
-** sch_path: /home/ttuser/wowa/xschem/comparator_stefan.sch
+* expanding   symbol:  comparator_stefan.sym # of pins=7
+** sym_path: /home/ttuser/work/tt06-analog-wowa/xschem/comparator_stefan.sym
+** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/comparator_stefan.sch
 .subckt comparator_stefan VCC VSS EN_N ADJ DIFFOUT PLUS MINUS
 *.PININFO PLUS:I MINUS:I VCC:I VSS:I EN_N:I ADJ:I DIFFOUT:O
 XM1 inhigh EN_N VCC VCC sky130_fd_pr__pfet_01v8 L=8 W=2 nf=1 m=1
@@ -77,9 +77,9 @@ XM15 n2n VCC VSS VSS sky130_fd_pr__nfet_01v8_lvt L=8 W=0.5 nf=1 m=1
 .ends
 
 
-* expanding   symbol:  /home/ttuser/wowa/xschem/analogswitch.sym # of pins=5
-** sym_path: /home/ttuser/wowa/xschem/analogswitch.sym
-** sch_path: /home/ttuser/wowa/xschem/analogswitch.sch
+* expanding   symbol:  analogswitch.sym # of pins=5
+** sym_path: /home/ttuser/work/tt06-analog-wowa/xschem/analogswitch.sym
+** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/analogswitch.sch
 .subckt analogswitch VCC VSS EN OUT IN
 *.PININFO EN:I IN:I OUT:O VCC:I VSS:I
 x2 OUT IN EN_N EN VSS VCC passgate
@@ -87,9 +87,9 @@ x1 EN EN_N VCC VSS lvtnot
 .ends
 
 
-* expanding   symbol:  /home/ttuser/wowa/xschem/passgate.sym # of pins=6
-** sym_path: /home/ttuser/wowa/xschem/passgate.sym
-** sch_path: /home/ttuser/wowa/xschem/passgate.sch
+* expanding   symbol:  passgate.sym # of pins=6
+** sym_path: /home/ttuser/work/tt06-analog-wowa/xschem/passgate.sym
+** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/passgate.sch
 .subckt passgate Z A GP GN VSSBPIN VCCBPIN
 *.PININFO A:B Z:B GP:I GN:I VCCBPIN:I VSSBPIN:I
 XM1 Z GN A VSSBPIN sky130_fd_pr__nfet_01v8 L=0.2 W=2 nf=1 m=1
@@ -97,9 +97,9 @@ XM2 Z GP A VCCBPIN sky130_fd_pr__pfet_01v8 L=0.2 W=2 nf=1 m=1
 .ends
 
 
-* expanding   symbol:  /home/ttuser/wowa/xschem/lvtnot.sym # of pins=4
-** sym_path: /home/ttuser/wowa/xschem/lvtnot.sym
-** sch_path: /home/ttuser/wowa/xschem/lvtnot.sch
+* expanding   symbol:  lvtnot.sym # of pins=4
+** sym_path: /home/ttuser/work/tt06-analog-wowa/xschem/lvtnot.sym
+** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/lvtnot.sch
 .subckt lvtnot a y VCCPIN VSSPIN
 *.PININFO y:O a:I VCCPIN:I VSSPIN:I
 XM2 y a VCCPIN VCCPIN sky130_fd_pr__pfet_01v8_lvt L=0.35 W=2 nf=1 m=1

@@ -1,7 +1,7 @@
 magic
 tech sky130A
 magscale 1 2
-timestamp 1713421997
+timestamp 1713467466
 << locali >>
 rect 6860 3180 11870 3290
 rect 6860 3080 7140 3180
@@ -1263,7 +1263,7 @@ timestamp 1713420441
 transform 1 0 17840 0 1 -200
 box 3650 3170 8500 8260
 use wowa_analog  wowa_analog_0
-timestamp 1713421997
+timestamp 1713467466
 transform 1 0 1626 0 1 -22900
 box 4762 25894 25772 41430
 use wowa_digital  wowa_digital_0
