@@ -1,14 +1,7 @@
 magic
 tech sky130A
 magscale 1 2
-timestamp 1713420955
-<< error_s >>
-rect -16560 -7130 -16460 -7040
-rect -16560 -7570 -16440 -7130
-rect -16550 -7780 -16440 -7570
-rect -17420 -7810 -16330 -7780
-rect -17580 -7890 -16330 -7810
-rect -17580 -7920 -16860 -7890
+timestamp 1713421928
 << metal1 >>
 rect -18980 -430 -16960 0
 rect -13400 -30 -13200 0
@@ -325,11 +318,11 @@ timestamp 1713400686
 transform 1 0 -28445 0 1 -10990
 box 9445 5990 17870 10730
 use analogswitch  x2
-timestamp 1713420955
+timestamp 1713421928
 transform 1 0 -18620 0 1 -12120
 box 5220 3520 7200 5620
 use onehot2mux  x3
-timestamp 1713420955
+timestamp 1713421928
 transform 1 0 -17650 0 1 -9780
 box -550 1780 3445 3920
 use sky130_fd_pr__cap_mim_m3_1_4HHTN9  XC1
