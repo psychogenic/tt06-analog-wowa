@@ -1,0 +1,20 @@
+************************************** 
+* SPICE STIMULI FILE 
+* generated from 
+************************************** 
+
+Vvss vss 0 PWL 0n 0 
+Vinput input 0 PWL 0n 1.2 1440n 1.2 1441n 0.6 2440n 0.6 2441n 0.9 3440n 
++0.9 3441n 1.2 4440n 1.2 4441n 0.4 5940n 0.4 5941n 0.6 6940n 0.6 6941n 0.7 
+Ven_n en_n 0 PWL 0n 0 
+Vb3 b3 0 PWL 5440n VCC 
+Vb4 b4 0 PWL 2440n 0 4440n 0 4441n VCC 
+Vb5 b5 0 PWL 2440n 0 3440n 0 3441n VCC 4440n VCC 4441n 0 
+Vvcc vcc 0 PWL 0n VCC 
+Vb6 b6 0 PWL 2440n 0 2441n VCC 3440n VCC 3441n 0 6440n 0 6441n 
++VCC 
+Vextthresh extthresh 0 PWL 0n 0.8 
+Vb7 b7 0 PWL 0n VCC 2440n VCC 2441n 0 
+Vuseext useext 0 PWL 0n 0 
+Vcal cal 0 PWL 0n 0 40n 0 41n VCC 440n VCC 441n 0 
+

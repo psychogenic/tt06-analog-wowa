@@ -6,15 +6,15 @@ V {}
 S {}
 E {}
 B 2 30 -590 830 -190 {flags=graph
-y1=0.324
-y2=2.294
+y1=-0.053
+y2=1.8
 ypos1=0
 ypos2=2
 divy=5
 subdivy=1
 unity=1
-x1=4e-10
-x2=0.00015
+x1=3.70009e-07
+x2=8.36991e-06
 divx=5
 subdivx=1
 xlabmag=1.0
@@ -27,43 +27,16 @@ unitx=1
 logx=0
 logy=0
 }
-B 2 30 -170 830 230 {flags=graph
-y1=0.192561
-y2=1.87357
-ypos1=0
-ypos2=2
-divy=5
-subdivy=1
-unity=1
-x1=4e-10
-x2=0.00015
-divx=5
-subdivx=1
-xlabmag=1.0
-ylabmag=1.0
-
-
-dataset=-1
-unitx=1
-logx=0
-logy=0
-
-
-
-color="8 4"
-node="input
-
-x1.x1.insig"}
 B 2 30 -1000 830 -600 {flags=graph
-y1=0.0069
+y1=-0.039
 y2=1.9
 ypos1=0
 ypos2=2
 divy=5
 subdivy=1
 unity=1
-x1=4e-10
-x2=0.00015
+x1=3.70009e-07
+x2=8.36991e-06
 divx=5
 subdivx=1
 xlabmag=1.0
@@ -76,81 +49,6 @@ dataset=-1
 unitx=1
 logx=0
 logy=0
-}
-N -370 -580 -370 -560 {
-lab=GND}
-N -400 -660 -370 -660 {
-lab=b3}
-N -370 -660 -370 -640 {
-lab=b3}
-N -490 -580 -490 -560 {
-lab=GND}
-N -520 -660 -490 -660 {
-lab=b2}
-N -490 -660 -490 -640 {
-lab=b2}
-N -600 -580 -600 -560 {
-lab=GND}
-N -630 -660 -600 -660 {
-lab=b1}
-N -600 -660 -600 -640 {
-lab=b1}
-N -720 -580 -720 -560 {
-lab=GND}
-N -750 -660 -720 -660 {
-lab=b0}
-N -720 -660 -720 -640 {
-lab=b0}
-N -370 -390 -370 -370 {
-lab=GND}
-N -400 -470 -370 -470 {
-lab=b7}
-N -370 -470 -370 -450 {
-lab=b7}
-N -490 -390 -490 -370 {
-lab=GND}
-N -520 -470 -490 -470 {
-lab=b6}
-N -490 -470 -490 -450 {
-lab=b6}
-N -600 -390 -600 -370 {
-lab=GND}
-N -630 -470 -600 -470 {
-lab=b5}
-N -600 -470 -600 -450 {
-lab=b5}
-N -720 -390 -720 -370 {
-lab=GND}
-N -750 -470 -720 -470 {
-lab=b4}
-N -720 -470 -720 -450 {
-lab=b4}
-C {devices/vsource.sym} -370 -610 0 0 {name=V1 value="pulse(0 1.8 0 0 0 8u 16u)" savecurrent=false}
-C {devices/gnd.sym} -370 -560 0 0 {name=l1 lab=GND}
-C {devices/lab_pin.sym} -400 -660 0 0 {name=p6 sig_type=std_logic lab=b3}
-C {devices/vsource.sym} -490 -610 0 0 {name=V2 value="pulse(0 1.8 0 0 0 4u 8u)" savecurrent=false}
-C {devices/gnd.sym} -490 -560 0 0 {name=l2 lab=GND}
-C {devices/lab_pin.sym} -520 -660 0 0 {name=p7 sig_type=std_logic lab=b2}
-C {devices/vsource.sym} -600 -610 0 0 {name=V3 value="pulse(0 1.8 0 0 0 2u 4u)" savecurrent=false}
-C {devices/gnd.sym} -600 -560 0 0 {name=l3 lab=GND}
-C {devices/lab_pin.sym} -630 -660 0 0 {name=p8 sig_type=std_logic lab=b1}
-C {devices/vsource.sym} -720 -610 0 0 {name=V4 value="pulse(0 1.8 0 0 0 1u 2u)" savecurrent=false}
-C {devices/gnd.sym} -720 -560 0 0 {name=l4 lab=GND}
-C {devices/lab_pin.sym} -750 -660 0 0 {name=p9 sig_type=std_logic lab=b0
-}
-C {devices/vsource.sym} -370 -420 0 0 {name=V5 value="pulse(0 1.8 0 0 0 128u 256u)" savecurrent=false}
-C {devices/gnd.sym} -370 -370 0 0 {name=l5 lab=GND}
-C {devices/lab_pin.sym} -400 -470 0 0 {name=p14 sig_type=std_logic lab=b7}
-C {devices/vsource.sym} -490 -420 0 0 {name=V6 value="pulse(0 1.8 0 0 0 64u 128u)" savecurrent=false}
-C {devices/gnd.sym} -490 -370 0 0 {name=l6 lab=GND}
-C {devices/lab_pin.sym} -520 -470 0 0 {name=p15 sig_type=std_logic lab=b6}
-C {devices/vsource.sym} -600 -420 0 0 {name=V7 value="pulse(0 1.8 0 0 0 32u 64u)" savecurrent=false}
-C {devices/gnd.sym} -600 -370 0 0 {name=l10 lab=GND}
-C {devices/lab_pin.sym} -630 -470 0 0 {name=p16 sig_type=std_logic lab=b5}
-C {devices/vsource.sym} -720 -420 0 0 {name=V8 value="pulse(0 1.8 0 0 0 16u 32u)" savecurrent=false}
-C {devices/gnd.sym} -720 -370 0 0 {name=l11 lab=GND}
-C {devices/lab_pin.sym} -750 -470 0 0 {name=p17 sig_type=std_logic lab=b4
-
 }
 C {wowa_analog.sym} -410 0 0 0 {name=x1}
 C {devices/lab_pin.sym} -560 160 0 0 {name=p1 lab=VCC}
@@ -189,7 +87,7 @@ C {devices/code.sym} -960 -160 0 0 {name=stimuli only_toplevel=false value="
 * .option temp = 25
 .param DELTA = 0.002
 
-.include stimuli_tb_wowa_analog.cir
+.include stimuli_tb_wowa_analog_withcal.cir
 
 .control
   setseed  8
@@ -197,13 +95,13 @@ C {devices/code.sym} -960 -160 0 0 {name=stimuli only_toplevel=false value="
   let run = 1
   save all
   op
-  write tb_wowa_analog.raw
+  write tb_wowa_analog_withcal.raw
   reset
   set appendwrite
-  dowhile run < = 5
+  dowhile run < = 1
     save all
-    tran 50n 150u uic
-    write tb_wowa_analog.raw
+    tran 10n 8000n uic
+    write tb_wowa_analog_withcal.raw
     let run = run + 1
     reset
   end
@@ -212,7 +110,7 @@ C {devices/code.sym} -960 -160 0 0 {name=stimuli only_toplevel=false value="
 "}
 C {devices/launcher.sym} -210 -260 0 0 {name=h5
 descr="load waves" 
-tclcommand="xschem raw_read $netlist_dir/tb_wowa_analog.raw tran"
+tclcommand="xschem raw_read $netlist_dir/tb_wowa_analog_withcal.raw tran"
 }
 C {devices/lab_pin.sym} -260 10 0 1 {name=p25 lab=DACOUT}
 C {wowa_analog.sym} -410 420 0 0 {name=x2

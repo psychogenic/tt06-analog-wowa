@@ -16,7 +16,7 @@ set extthresh 0.8
 set input 1.2
 s 40
 set cal 1
-s 200
+s 1000
 set cal 0
 s 9000
 set input 0.3

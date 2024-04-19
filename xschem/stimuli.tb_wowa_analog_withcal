@@ -1,0 +1,51 @@
+
+unit n
+voltage VCC
+slope 1
+format hspice_simple
+
+param eval 200
+
+beginfile stimuli_tb_wowa_analog_withcal.cir
+set vss 0
+set vcc 1
+set en_n 0
+set cal 0
+set useext 0
+set extthresh 0.8
+set input 1.2
+set b7 1
+
+s 40
+set cal 1
+s 400
+set cal 0
+s 1000
+set input 0.6
+s 1000
+set b7 0
+set b6 0
+set b5 0
+set b4 0
+set b6 1
+set input 0.9
+s 1000
+set b6 0
+set b5 1
+set input 1.2
+s 1000
+set b5 0
+set b4 1
+set input 0.4
+s 1000
+set b7 0
+set b4 1
+set b3 1
+s 500
+set input 0.6
+s 500
+set b6 1
+s 500
+set input 0.7
+s 500
+endfile
