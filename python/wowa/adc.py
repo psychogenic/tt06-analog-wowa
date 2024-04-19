@@ -50,9 +50,10 @@ class ADC(Elaboratable):
         self.comparator_enable_ctrl = Signal()
         
         
-        self.comparator = Comparator(config.NumInputSynchronizerStagesDefault)
-        self.dac_setting = Signal(config.DACNumBits) # R2RDAC(config.DACNumBits)
+        self.dac_setting = Signal(config.DACNumBits)
         self.state = Signal(FSMState)
+        
+        self.comparator = Comparator(config.NumInputSynchronizerStagesDefault)
         
         # debug
         if config.CalibrateNumClocks < 16:
@@ -62,17 +63,28 @@ class ADC(Elaboratable):
         self.internalCounter = Signal(range(bitsForAtLeast))
         
     def ports(self):
-        return [self.enable, self.use_calibration, self.analog_comparator_pin, 
-                self.use_external_reference, self.result_ready, self.result,
-                self.calib_done, self.comparator_enable_ctrl]
+        return [
+            self.enable,
+            self.analog_comparator_pin,
+            self.use_external_reference,
+            self.use_calibration,
+            
+            self.state, 
+            self.dac_setting,
+            self.calib_done,
+            self.comparator_enable_ctrl,
+            self.result_ready,
+            self.result,
+        
+            
+            
+            ]
     
     
     
     def elaborate(self, platform:Platform):
         m = Module()
         m.submodules.comparator = self.comparator
-        # m.submodules.dac = self.dac 
-        
         
         m.d.comb += [
             self.comparator.analog_comp_input.eq(self.analog_comparator_pin),
@@ -92,35 +104,46 @@ class ADC(Elaboratable):
                 
             with m.Case(FSMState.Idle):
                 with m.If(self.enable.bool()):
+                    # is enabled
                     m.d.sync += [
-                        self.dac_setting.eq(0),
                         self.comparator.n_enable.eq(0),
+                        
                         
                     ]
                     with m.If(self.use_calibration):
                         m.d.sync += [
+                            self.dac_setting.eq(2**(config.DACNumBits-1)),
                             self.comparator.calibrate.eq(1),
                             internalCounter.eq(0),
                         ]
                     with m.Else():
-                        m.d.sync += internalCounter.eq(config.CalibrateNumClocks)
+                        m.d.sync += [
+                            self.dac_setting.eq(0),
+                            internalCounter.eq(config.CalibrateNumClocks)
+                        ]
                         
-                    m.d.sync += [self.state.eq(FSMState.Calibrating),
-                                 self.calib_done.eq(0)
+                    m.d.sync += [
+                                self.state.eq(FSMState.Calibrating),
+                                self.calib_done.eq(0)
                                 ]
                 with m.Else():
+                    # not enabled
                     m.d.sync += [ 
                         self.comparator.n_enable.eq(1),
+                        self.dac_setting.eq(0),
                         self.result.eq(0)
                     ]
             
             with m.Case(FSMState.Calibrating):
-                m.d.sync += self.result_ready.eq(0)
+                m.d.sync += [
+                    self.result_ready.eq(0),
+                ]
                 with m.If(internalCounter >= config.CalibrateNumClocks):
                     m.d.sync += [
                         self.comparator.calibrate.eq(0),
                         self.state.eq(FSMState.MeasureStart),
-                        internalCounter.eq(config.DACNumBits - 1)
+                        internalCounter.eq(config.DACNumBits - 1),
+                        self.result.eq(0),
                         
                     ]
                 with m.Else():
@@ -212,7 +235,7 @@ if __name__ == "__main__":
     def coverAndVerify(m:Module, adc:ADC, includeCovers:bool=True):
         # Note: I have a condition below that makes the period 0.1s -- so 
         # during testing we only need to count a bit past 100 ticks to see results
-        hist = History.new(m, numCyclesToTrack=config.CalibrateNumClocks+80)
+        hist = History.new(m, numCyclesToTrack=config.CalibrateNumClocks+95)
         #hist.track(adc.dac.value)
         #hist.track(adc.result_ready)
         # hist.track(adc.result)
@@ -223,7 +246,7 @@ if __name__ == "__main__":
         # hist.track(adc.dac.value)
         if includeCovers:
             m.d.comb += Cover(
-                    (hist.cycle > 80)
+                    (hist.cycle > 95)
                     &
                     (adc.result_ready)
                     &
@@ -233,8 +256,97 @@ if __name__ == "__main__":
                     
                 )
             
+            m.d.comb += Cover(
+                    (hist.cycle > 10)
+                    &
+                    (adc.result_ready)
+                    &
+                    (~adc.calib_done)
+                    &
+                    (adc.result == 42)
+                    
+                )
+            
     
     
+    
+    # this simulation will only occur if module was run with 'simulate' action
+    @Simulator.simulate(m, 'adc_with_cals', 
+                        traces=dut.ports())
+    def adc_run_withcals():
+        '''
+        inputs 
+        
+            self.enable,
+            self.analog_comparator_pin,
+            self.use_external_reference,
+            self.use_calibration,
+        '''
+        
+        yield from Simulator.set(dut.enable, 1)
+        yield from Simulator.set(dut.use_external_reference, 1)
+        yield from Simulator.setAndTick(dut.use_calibration, 1)
+        yield Delay(40e-6)
+        yield from Simulator.setAndTick(dut.analog_comparator_pin, 1)
+        yield Delay(15e-6)
+        yield from Simulator.setAndTick(dut.analog_comparator_pin, 0)
+        yield Delay(15e-6)
+        yield from Simulator.setAndTick(dut.analog_comparator_pin, 1)
+        yield Delay(25e-6)
+        yield from Simulator.setAndTick(dut.analog_comparator_pin, 0)
+        yield Delay(50e-6)
+        yield from Simulator.setAndTick(dut.analog_comparator_pin, 1)
+        yield Delay(50e-6)
+        yield from Simulator.setAndTick(dut.analog_comparator_pin, 0)
+        yield Delay(30e-6)
+        
+        yield from Simulator.setAndTick(dut.analog_comparator_pin, 1)
+        yield Delay(30e-6)
+        yield from Simulator.setAndTick(dut.analog_comparator_pin, 0)
+        yield Delay(200e-6)
+        
+        
+        
+        
+    
+    # this simulation will only occur if module was run with 'simulate' action
+    @Simulator.simulate(m, 'adc_no_cals', 
+                        traces=dut.ports())
+    def adc_run_nocals():
+        '''
+        inputs 
+        
+            self.enable,
+            self.analog_comparator_pin,
+            self.use_external_reference,
+            self.use_calibration,
+        '''
+        
+        yield from Simulator.set(dut.enable, 1)
+        yield from Simulator.set(dut.use_external_reference, 1)
+        yield from Simulator.setAndTick(dut.use_calibration, 0)
+        yield Delay(10e-6)
+        yield from Simulator.setAndTick(dut.analog_comparator_pin, 1)
+        yield Delay(15e-6)
+        yield from Simulator.setAndTick(dut.analog_comparator_pin, 0)
+        yield Delay(15e-6)
+        yield from Simulator.setAndTick(dut.analog_comparator_pin, 1)
+        yield Delay(25e-6)
+        yield from Simulator.setAndTick(dut.analog_comparator_pin, 0)
+        yield Delay(50e-6)
+        yield from Simulator.setAndTick(dut.analog_comparator_pin, 1)
+        yield Delay(20e-6)
+        yield from Simulator.setAndTick(dut.analog_comparator_pin, 0)
+        yield Delay(30e-6)
+        
+        yield from Simulator.setAndTick(dut.analog_comparator_pin, 1)
+        yield Delay(18e-6)
+        yield from Simulator.setAndTick(dut.analog_comparator_pin, 0)
+        yield Delay(200e-6)
+        
+        
+        
+        
     
     
     

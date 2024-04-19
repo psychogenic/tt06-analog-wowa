@@ -142,8 +142,6 @@ if __name__ == "__main__":
                                 dut.analog_comparator_out,
                                 dut.result, dut.result_ready])
     def basicstartup():
-        
-        
         '''
         self.user_enable = Signal()
         self.analog_comparator_out = Signal()
@@ -159,11 +157,6 @@ if __name__ == "__main__":
         '''
         yield from Simulator.set(dut.use_ext_thresh, 0)
         yield from Simulator.set(dut.calib_enable, 0)
-        
-        # internal
-        yield from Simulator.set(dut.calib_enable, 0)
-        
-        # internal
         
         yield from Simulator.setAndTick(dut.user_enable, 1)
         
@@ -183,21 +176,6 @@ if __name__ == "__main__":
                                 dut.analog_comparator_out,
                                 dut.result, dut.result_ready])
     def extthresh():
-        
-        
-        '''
-        self.user_enable = Signal()
-        self.analog_comparator_out = Signal()
-        self.use_ext_thresh = Signal()
-        self.calib_enable = Signal()
-        
-        
-        
-        self.result_ready = Signal()
-        self.result = Signal(config.DACNumBits)
-        self.dac_set = Signal(config.DACNumBits)
-        self.comparator_nen = Signal()
-        '''
         yield from Simulator.set(dut.use_ext_thresh, 1)
         yield from Simulator.set(dut.calib_enable, 0)
         
@@ -225,19 +203,6 @@ if __name__ == "__main__":
                                 dut.analog_comparator_out,
                                 dut.result, dut.result_ready])
     def pipedsigs():
-        '''
-        self.user_enable = Signal()
-        self.analog_comparator_out = Signal()
-        self.use_ext_thresh = Signal()
-        self.calib_enable = Signal()
-        
-        
-        
-        self.result_ready = Signal()
-        self.result = Signal(config.DACNumBits)
-        self.dac_set = Signal(config.DACNumBits)
-        self.comparator_nen = Signal()
-        '''
         yield from Simulator.set(dut.use_ext_thresh, 0)
         yield from Simulator.set(dut.calib_enable, 0)
         # internal
@@ -298,28 +263,123 @@ if __name__ == "__main__":
                                 dut.result,
                                 dut.result_ready,
                                 dut.user_enable,
-                                dut.comparator_nen])
+                                dut.comparator_nen,
+                                dut.analog_comparator_out])
     def sysenrdm():
         yield from Simulator.set(dut.use_ext_thresh, 0)
         yield from Simulator.set(dut.calib_enable, 0)
         yield from Simulator.set(dut.user_enable, 0)
         yield from Simulator.setAndTick(dut.analog_comparator_out, 0)
         
+        cal_en=0
         yield Delay(100e-6)
-        
-        for i in range(8):
-            delon = random.randint(12, 200)
-            yield from Simulator.setAndTick(dut.user_enable, 1)
-            yield Delay(delon*1e-6)
-            deloff = random.randint(30, 150)
-            yield from Simulator.setAndTick(dut.user_enable, 0)
-            yield Delay(deloff*1e-6)
+        for _j in range(2):
+            
+            yield from Simulator.setAndTick(dut.calib_enable, cal_en)
+            cal_en += 1
+            for _i in range(8):
+                delon = random.randint(12, 60)
+                yield from Simulator.setAndTick(dut.user_enable, 1)
+                yield Delay(delon*1e-6)
+                
+                delon = random.randint(12, 140)
+                yield from Simulator.setAndTick(dut.analog_comparator_out, 1)
+                yield Delay(delon*1e-6)
+                yield from Simulator.setAndTick(dut.analog_comparator_out, 0)
+                delon = random.randint(40, 100)
+                yield Delay(delon*1e-6)
+                
+                deloff = random.randint(30, 150)
+                yield from Simulator.setAndTick(dut.user_enable, 0)
+                yield Delay(deloff*1e-6)
             
         
+    @Verification.coverAndVerify(m, dut)
+    def bmcChecks(m:Module, digBox:WoWADigital, includeCovers:bool=False):
+        hist = History.new(m, numCyclesToTrack=125)
+        hist.track(digBox.user_enable)
+        hist.track(digBox.calib_enable)
+        hist.track(digBox.result_ready)
+        hist.track(digBox.analog_comparator_out)
+        
+        
+        with m.If(hist.wasNever(digBox.analog_comparator_out, 1)):
+            # if we don't see analog comp go high ever
+            # then result can never be non-zero when declared 'ready'
+            with m.If(hist.rose(digBox.result_ready)):
+                m.d.comb += Assert(digBox.result == 0)
 
         
-    
+        with m.If(hist.rose(digBox.result_ready)):
+            # if we just declared ready
+            with m.If(hist.past(digBox.analog_comparator_out, 3)):
+                # and before that comparator output was high, then
+                # result can't be 0
+                m.d.comb += Assert(digBox.result != 0)
         
+        with m.If(hist.wasNever(digBox.calib_enable, 1)):
+            # do calibrate never goes high if calibs not enabled
+            m.d.comb += Assert(~digBox.do_calibrate)
+        
+        with m.If(hist.wasNever(digBox.user_enable, 1)):
+            with m.If(hist.cycle > 4):
+                # comparator never enabled if user never says to do so
+                m.d.comb += Assert(digBox.comparator_nen)
+                
+                
+        with m.If(digBox.use_ext_thresh):
+            m.d.comb += Assert()
+
+    @Verification.coverAndVerify(m, dut)
+    def coverAndVerify(m:Module, digBox:WoWADigital, includeCovers:bool=False):
+        # Note: I have a condition below that makes the period 0.1s -- so 
+        # during testing we only need to count a bit past 100 ticks to see results
+        hist = History.new(m, numCyclesToTrack=config.CalibrateNumClocks+95)
+        '''
+        
+        self.user_enable = Signal()
+        self.analog_comparator_out = Signal()
+        self.use_ext_thresh = Signal()
+        self.calib_enable = Signal()
+
+        #TODO FIXME DAC PINS??
+        
+        # outputs 
+        self.result_ready = Signal()
+        self.result = Signal(config.DACNumBits)
+        self.dac_set = Signal(config.DACNumBits)
+        self.comparator_nen = Signal()
+        
+        self.thresh_sel = Signal()
+        self.do_calibrate = Signal()
+        '''
+        
+        hist.track(digBox.result_ready)
+        hist.track(digBox.do_calibrate)
+        hist.track(digBox.adc.calib_done)
+        # hist.track(adc.dac.value)
+        if includeCovers:
+            # with calibration
+            with m.If(hist.wasEver(digBox.adc.calib_done, 1).bool()):
+                m.d.comb += Cover(
+                        (hist.cycle > 10)
+                        &
+                        (hist.fell(digBox.result_ready))
+                        &
+                        (digBox.result == 0x99)
+                        
+                    )        
+    
+            # no calibration
+            with m.If(hist.wasNever(digBox.adc.calib_done, 1).bool()):
+                m.d.comb += Cover(
+                        (hist.cycle > 10)
+                        &
+                        (hist.fell(digBox.result_ready))
+                        &
+                        (digBox.result == 0xaa)
+                        
+                    )        
         
     
     
