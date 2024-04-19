@@ -1,7 +1,7 @@
 magic
 tech sky130A
 magscale 1 2
-timestamp 1713335925
+timestamp 1713490400
 << nwell >>
 rect -38 261 222 582
 << pwell >>
@@ -41,8 +41,8 @@ port 5 nsew
 rlabel comment s 0 0 0 0 4 fill_2
 << properties >>
 string FIXED_BBOX 0 0 184 544
-string GDS_END 40252
-string GDS_FILE wowa_digital_ol.gds
-string GDS_START 38896
+string GDS_END 46298
+string GDS_FILE wowa_digital.gds
+string GDS_START 44942
 string path 0.000 0.000 0.920 0.000 
 << end >>
