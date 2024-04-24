@@ -57,7 +57,7 @@ For things to work, the comparator does need some calibration, at least sometime
  
  
  
-![With calib readings](images/trace-fsm.jpg)
+![With calib readings](images/trace-withcals.jpg)
 
 This actually charges up a capacitor internally which is used to adjust the comparator output.  Because this takes a finite amount of time, which was found to be around 400ns for reliable operation in simulation, I gave it 28 clock cycles of calib time to support a theoretical clock of up to 70MHz.
 
