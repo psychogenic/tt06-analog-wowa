@@ -77,13 +77,26 @@ External input goes to one side of the comparator, and the output of this mux go
 That calibrated comparator has a CAL input.  That's because, inside of that symbol is this:
 ![WoWA Calibrated comparator](images/calibrated_comparator.jpg)
 
-Another mux and and alanog switch, in addition to the comparator.  That lets us choose between sending the input or the threshold to the plus side of the comparator.  Sending the threshold to both inputs of the comparator seems useless, but that only happens when CALIB is HIGH, which also trips the analog switch and pipes the output of the comparator to the capacitor and the adjust pin on said comparator.  This is why it's a *calibrated* comparator: Hold CALIB high for a little bit, and the results come out looking a lot better.
+Another mux and and analog switch, in addition to the comparator.  That lets us choose between sending the input or the threshold to the plus side of the comparator.  Sending the threshold to both inputs of the comparator seems useless, but that only happens when CALIB is HIGH, which also trips the analog switch and pipes the output of the comparator to the capacitor and the adjust pin on said comparator.  This is why it's a *calibrated* comparator: Hold CALIB high for a little bit, and the results come out looking a lot better.
 
 Finally, inside that triangle is the actual comparator circuit, which I re-did watching a [video](https://www.youtube.com/watch?v=q3ZcpSkVVuc) of [Stefan Schippers](https://github.com/StefanSchippers) teaching some xschem design.
 
 ![wowa stefan comparator](images/wowa_comparator.jpg)
 
 It's a bunch of FETs doing FET things.
+
+
+### TODO
+
+Well, I should probably have put a sample-and-hold system in there--would've been easy with the analog switch and a cap... c'est la vie.
+
+Also, I didn't know how big the digital side would turn out, so I went the route of premature optimization (the "route" of all evil), and just used the output result bits as my scratch for the DAC twiddling.  The upside is that we get to have a good look at what the DAC is actually doing.  The downside is that it's a bit noisy, you only get a valid result during the result_ready blip (which I actually stretched with an additional FSM state).
+
+The analog and digital together are all LVS clean and the digital side is tested in sim and with formal verification methods (a bit), but I never got a full simulation at the gate level because I couldn't coax verilator into handling my python-generated verilog... caused a weird bug, close to deadline.  Too bad: fingers crossed.
+
+Would be nice to have a mode to control the DAC manually.
+
+I wasn't exactly certain how the digital reset side would behave--I got scared that I'd wind up with reversed logic and the demoboard holding everything in reset forever.  So I left it unconnected and sacrificed a digital in to be the new reset pin. Sadness.  But safe.  Just remember it needs to be connected, "right" (probably low to go but, yeah, not sure, hah).
 
 
 
