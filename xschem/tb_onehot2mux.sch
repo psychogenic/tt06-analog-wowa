@@ -5,16 +5,16 @@ K {}
 V {}
 S {}
 E {}
-B 2 230 -290 1030 110 {flags=graph
-y1=0.38
-y2=2.28
+B 2 990 -920 1790 -520 {flags=graph
+y1=-0.0015
+y2=1.9
 ypos1=0
 ypos2=2
 divy=5
 subdivy=1
 unity=1
-x1=-3.8708e-08
-x2=9.6129e-07
+x1=1e-11
+x2=1e-06
 divx=5
 subdivx=1
 xlabmag=1.0
@@ -27,7 +27,7 @@ unitx=1
 logx=0
 logy=0
 }
-B 2 260 -800 1060 -400 {flags=graph
+B 2 990 -1350 1790 -950 {flags=graph
 y1=0.34
 y2=1.8
 ypos1=0
@@ -35,20 +35,21 @@ ypos2=2
 divy=5
 subdivy=1
 unity=1
-x1=-3.8708e-08
-x2=9.6129e-07
+x1=1e-11
+x2=1e-06
 divx=5
 subdivx=1
 xlabmag=1.0
 ylabmag=1.0
-node=out
-color=7
+node="out
+sel"
+color="7 4"
 dataset=-1
 unitx=1
 logx=0
 logy=0
 }
-B 2 230 300 1030 700 {flags=graph
+B 2 990 -510 1790 -110 {flags=graph
 y1=0
 y2=1.9
 ypos1=0
@@ -56,8 +57,8 @@ ypos2=2
 divy=5
 subdivy=1
 unity=1
-x1=-3.8708e-08
-x2=9.6129e-07
+x1=1e-11
+x2=1e-06
 divx=5
 subdivx=1
 xlabmag=1.0
@@ -70,7 +71,7 @@ unitx=1
 logx=0
 logy=0
 }
-B 2 270 -1240 1070 -840 {flags=graph
+B 2 990 -1790 1790 -1390 {flags=graph
 y1=0.5
 y2=1.8
 ypos1=0
@@ -78,8 +79,8 @@ ypos2=2
 divy=5
 subdivy=1
 unity=1
-x1=-3.8708e-08
-x2=9.6129e-07
+x1=1e-11
+x2=1e-06
 divx=5
 subdivx=1
 xlabmag=1.0
@@ -92,9 +93,23 @@ unitx=1
 logx=0
 logy=0
 }
-C {onehot2mux.sym} 10 0 0 0 {name=x1}
-C {sky130_fd_pr/corner.sym} -420 310 0 0 {name=CORNER only_toplevel=true corner=tt_mm}
-C {devices/code.sym} -400 120 0 0 {name=stimuli only_toplevel=false value="
+T {When SEL is HIGH, 
+output matches in1,
+otherwise in0 is 
+on the output} 700 -1260 0 0 0.6 0.6 {}
+T {Signal present
+on inputs 0, 1} 700 -1640 0 0 0.6 0.6 {}
+T {Inside the MUX, we 
+need an inverted
+version of the SEL.
+This graphs peeks
+at that.} 680 -800 0 0 0.6 0.6 {}
+T {Simulated variations
+on VCC} 680 -340 0 0 0.6 0.6 {}
+T {DUT} 370 -1150 0 0 0.6 0.6 {}
+C {onehot2mux.sym} 450 -1040 0 0 {name=x1}
+C {sky130_fd_pr/corner.sym} 250 -710 0 0 {name=CORNER only_toplevel=true corner=tt_mm}
+C {devices/code.sym} 250 -880 0 0 {name=stimuli only_toplevel=false value="
 ** this experimental option enables mos model bin 
 ** selection based on W/NF instead of W
 .option chgtol=4e-16 method=gear
@@ -134,13 +149,14 @@ C {devices/code.sym} -400 120 0 0 {name=stimuli only_toplevel=false value="
   quit 0
 .endc
 "}
-C {devices/launcher.sym} 280 200 0 0 {name=h5
+C {devices/launcher.sym} 520 -800 0 0 {name=h5
 descr="load waves" 
 tclcommand="xschem raw_read $netlist_dir/tb_onehot2mux.raw tran"
 }
-C {devices/lab_pin.sym} -80 60 0 0 {name=p1 lab=VCC}
-C {devices/lab_pin.sym} -80 80 0 0 {name=p2 lab=VSS}
-C {devices/lab_pin.sym} -80 -40 0 0 {name=p3 lab=SEL}
-C {devices/lab_pin.sym} -80 20 0 0 {name=p4 lab=IN1}
-C {devices/lab_pin.sym} 90 -10 0 1 {name=p5 lab=OUT}
-C {devices/lab_pin.sym} -80 -10 0 0 {name=p6 lab=IN0}
+C {devices/lab_pin.sym} 360 -980 0 0 {name=p1 lab=VCC}
+C {devices/lab_pin.sym} 360 -960 0 0 {name=p2 lab=VSS}
+C {devices/lab_pin.sym} 360 -1080 0 0 {name=p3 lab=SEL}
+C {devices/lab_pin.sym} 360 -1020 0 0 {name=p4 lab=IN1}
+C {devices/lab_pin.sym} 530 -1050 0 1 {name=p5 lab=OUT}
+C {devices/lab_pin.sym} 360 -1050 0 0 {name=p6 lab=IN0}
+C {devices/title.sym} 370 -50 0 0 {name=l1 author="Pat Deegan"}

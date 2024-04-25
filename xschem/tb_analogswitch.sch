@@ -5,16 +5,16 @@ K {}
 V {}
 S {}
 E {}
-B 2 -480 280 320 680 {flags=graph
-y1=0.248056
-y2=2.14805
+B 2 1370 -1110 2270 -630 {flags=graph
+y1=0
+y2=1.9
 ypos1=0
 ypos2=2
 divy=5
 subdivy=1
 unity=1
-x1=-2.59989e-07
-x2=2.34e-06
+x1=1e-11
+x2=2.6e-06
 divx=5
 subdivx=1
 xlabmag=1.0
@@ -28,41 +28,44 @@ unitx=1
 logx=0
 logy=0
 }
-N 50 -20 50 10 {
+T {Simple test of switch operation} 670 -1230 0 0 1 1 {}
+T {Switch enabled, signal goes to out.
+When off, cap holds last value.} 1530 -610 0 0 0.7 0.7 {}
+N 1060 -900 1060 -870 {
 lab=VSS}
-N 50 -80 220 -80 {
+N 1060 -960 1230 -960 {
 lab=OUT}
-N -20 -80 50 -80 {
+N 990 -960 1060 -960 {
 lab=OUT}
-N -640 -190 -640 -170 {
+N 450 -900 450 -880 {
 lab=VSS}
-N -640 -110 -640 -100 {
+N 450 -820 450 -810 {
 lab=VSS}
-N -640 -170 -640 -110 {
+N 450 -880 450 -820 {
 lab=VSS}
-N -640 -270 -640 -250 {
+N 450 -980 450 -960 {
 lab=IN}
-N -640 -270 -600 -270 {
+N 450 -980 490 -980 {
 lab=IN}
-N 50 180 50 210 {
+N 1060 -700 1060 -670 {
 lab=VSS}
-N 50 120 220 120 {
+N 1060 -760 1230 -760 {
 lab=OUT_PARAX}
-N -20 120 50 120 {
+N 990 -760 1060 -760 {
 lab=OUT_PARAX}
-C {sky130_fd_pr/cap_mim_m3_2.sym} 50 -50 0 0 {name=C1 model=cap_mim_m3_2 W=10 L=10 MF=5 spiceprefix=X}
-C {devices/lab_pin.sym} 50 10 0 0 {name=p9 lab=VSS}
-C {analogswitch.sym} -170 -80 0 0 {name=x1}
-C {devices/lab_pin.sym} -320 -30 0 0 {name=p1 lab=VCC}
-C {devices/lab_pin.sym} -320 -10 0 0 {name=p2 lab=VSS}
-C {devices/lab_pin.sym} -320 -110 0 0 {name=p3 lab=EN}
-C {devices/lab_pin.sym} -320 -80 0 0 {name=p4 lab=IN}
-C {devices/lab_pin.sym} 220 -80 2 0 {name=p5 lab=OUT}
-C {devices/vsource.sym} -640 -220 0 0 {name=V1 value="SIN (1 0.5 10Meg)"
+C {sky130_fd_pr/cap_mim_m3_2.sym} 1060 -930 0 0 {name=C1 model=cap_mim_m3_2 W=10 L=10 MF=5 spiceprefix=X}
+C {devices/lab_pin.sym} 1060 -870 0 0 {name=p9 lab=VSS}
+C {analogswitch.sym} 840 -960 0 0 {name=x1}
+C {devices/lab_pin.sym} 690 -910 0 0 {name=p1 lab=VCC}
+C {devices/lab_pin.sym} 690 -890 0 0 {name=p2 lab=VSS}
+C {devices/lab_pin.sym} 690 -990 0 0 {name=p3 lab=EN}
+C {devices/lab_pin.sym} 690 -960 0 0 {name=p4 lab=IN}
+C {devices/lab_pin.sym} 1230 -960 2 0 {name=p5 lab=OUT}
+C {devices/vsource.sym} 450 -930 0 0 {name=V1 value="SIN (1 0.5 10Meg)"
  savecurrent=false}
-C {devices/lab_pin.sym} -640 -100 0 0 {name=p6 lab=VSS}
-C {sky130_fd_pr/corner.sym} -950 110 0 0 {name=CORNER only_toplevel=true corner=tt_mm}
-C {devices/code.sym} -930 -80 0 0 {name=stimuli only_toplevel=false value="
+C {devices/lab_pin.sym} 450 -810 0 0 {name=p6 lab=VSS}
+C {sky130_fd_pr/corner.sym} 230 -860 0 0 {name=CORNER only_toplevel=true corner=tt_mm}
+C {devices/code.sym} 220 -1010 0 0 {name=stimuli only_toplevel=false value="
 ** this experimental option enables mos model bin 
 ** selection based on W/NF instead of W
 .option chgtol=4e-16 method=gear
@@ -102,20 +105,21 @@ C {devices/code.sym} -930 -80 0 0 {name=stimuli only_toplevel=false value="
   quit 0
 .endc
 "}
-C {devices/launcher.sym} -880 330 0 0 {name=h5
+C {devices/launcher.sym} 300 -640 0 0 {name=h5
 descr="load waves" 
 tclcommand="xschem raw_read $netlist_dir/tb_analogswitch.raw tran"
 }
-C {devices/lab_pin.sym} -600 -270 2 0 {name=p7 lab=IN}
-C {sky130_fd_pr/cap_mim_m3_2.sym} 50 150 0 0 {name=C2 model=cap_mim_m3_2 W=10 L=10 MF=5 spiceprefix=X}
-C {devices/lab_pin.sym} 50 210 0 0 {name=p8 lab=VSS}
-C {analogswitch.sym} -170 120 0 0 {name=x2
+C {devices/lab_pin.sym} 490 -980 2 0 {name=p7 lab=IN}
+C {sky130_fd_pr/cap_mim_m3_2.sym} 1060 -730 0 0 {name=C2 model=cap_mim_m3_2 W=10 L=10 MF=5 spiceprefix=X}
+C {devices/lab_pin.sym} 1060 -670 0 0 {name=p8 lab=VSS}
+C {analogswitch.sym} 840 -760 0 0 {name=x2
 schematic=analogswitch.sim
 spice_sym_def="tcleval(.include [file normalize extracted/analogswitch.sim.spice])"
 tclcommand="textwindow [file normalize extracted/analogswitch.sim.spice]"
 }
-C {devices/lab_pin.sym} -320 170 0 0 {name=p10 lab=VCC}
-C {devices/lab_pin.sym} -320 190 0 0 {name=p11 lab=VSS}
-C {devices/lab_pin.sym} -320 90 0 0 {name=p12 lab=EN}
-C {devices/lab_pin.sym} -320 120 0 0 {name=p13 lab=IN}
-C {devices/lab_pin.sym} 220 120 2 0 {name=p14 lab=OUT_PARAX}
+C {devices/lab_pin.sym} 690 -710 0 0 {name=p10 lab=VCC}
+C {devices/lab_pin.sym} 690 -690 0 0 {name=p11 lab=VSS}
+C {devices/lab_pin.sym} 690 -790 0 0 {name=p12 lab=EN}
+C {devices/lab_pin.sym} 690 -760 0 0 {name=p13 lab=IN}
+C {devices/lab_pin.sym} 1230 -760 2 0 {name=p14 lab=OUT_PARAX}
+C {devices/title.sym} 380 -530 0 0 {name=l1 author="Pat Deegan"}

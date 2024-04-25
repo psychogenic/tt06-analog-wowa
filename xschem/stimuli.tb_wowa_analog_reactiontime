@@ -1,0 +1,76 @@
+
+unit n
+voltage VCC
+slope 1
+format hspice_simple
+
+param thresh 0.6
+param compdelay 55
+beginfile stimuli_tb_wowa_analog_reactiontime.cir
+set vss 0
+set vcc 1
+set en_n 0
+set b7 1
+set b0 0
+set b1 0
+set b2 0 
+set b3 0
+set b4 0
+set b5 0
+set b6 0
+set cal 0
+set threshv thresh
+set input 0.14
+set en_n 0
+set extthresh 0
+set useext 0
+s 100
+set cal 1
+s 500
+set cal 0
+s 50
+set input 1.33
+s compdelay
+set input 0.7
+s compdelay
+set input 1.6
+s compdelay
+set input 0.5
+s compdelay
+set input 1.25
+s compdelay
+set input 1.15
+s compdelay
+set input 1.05
+s compdelay
+set input 0.9
+s compdelay
+set input 1.02
+s compdelay
+set input 0.2
+s compdelay
+set input 1.15
+s compdelay
+set input 0.54
+s compdelay
+set input 1.4
+s compdelay
+
+set b6 1
+set b5 1
+set b4 1
+s compdelay*6
+set b6 0
+set b5 0
+s compdelay*3
+set input 0.6
+s compdelay*3
+set b7 0
+set b5 1
+s compdelay*3
+
+s 200
+
+
+endfile
+
