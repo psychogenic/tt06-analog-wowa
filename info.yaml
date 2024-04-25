@@ -3,9 +3,9 @@ project:
   title:        "WoWA"      # Project title
   author:       "Pat Deegan"      # Your name
   discord:      "psychogenic"      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
-  description:  "Is it really the World Worst ADC?  Maybe it'll be a wow-ADC instead... we'll see!"      # One line description of what your project does
+  description:  "Is it really the World Worst ADC?  Maybe it'll be a wow-ADC instead... we'll see! Mixed signal design, analog circuit driven by an FSM.  Simulations at this point say we might get 144ksps 8-bit conversions.  Or maybe nothing at all."      # One line description of what your project does
   language:     "Analog" # other examples include Verilog, Amaranth, VHDL, etc
-  clock_hz:     0       # Clock frequency in Hz (or 0 if not applicable)
+  clock_hz:     10000000       # Clock frequency in Hz (or 0 if not applicable)
 
   # How many tiles your design occupies? A single tile is about 167x108 uM.
   tiles: "1x2"          # Valid values: 1x1 (digital only), 1x2, 2x2, 3x2, 4x2, 6x2 or 8x2
@@ -57,7 +57,7 @@ pinout:
   ua[2]: "p3 opamp plus"
   ua[3]: "p3 opamp minus/ext threshold for comp"
   ua[4]: "Analog input to ADC"
-  ua[5]: "Matt's DAC output"
+  ua[5]: "Matt's R2R DAC output/int threshold for comp"
 
 # Do not change!
 yaml_version: 6
