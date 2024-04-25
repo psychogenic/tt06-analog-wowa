@@ -61,7 +61,7 @@ For things to work, the comparator does need some calibration, at least sometime
 
 This actually charges up a capacitor internally which is used to adjust the comparator output.  Because this takes a finite amount of time, which was found to be around 400ns for reliable operation in simulation, I gave it 28 clock cycles of calib time to support a theoretical clock of up to 70MHz.
 
-Using a conservative 50MHz clock, this means that readings can be done in about 1.75 microseconds with calibration, and 1.2 us without.  Assuming we need to cal every 3 samples, this gives the ADC a throughput of around 720k samples per second, or more than 560ksps if you want to keep it simple and sample all the time, on a 50MHz clock.
+Using a conservative 50MHz clock, this means that readings can be done in about 1.75 microseconds with calibration, and 1.2 us without.  Assuming we need to cal every 3 samples, this gives the ADC a throughput of around 720k samples per second, or more than 560ksps if you want to keep it simple and calibrate before every measurement, on a 50MHz clock.
 
 
 ### Analog
@@ -97,6 +97,8 @@ The analog and digital together are all LVS clean and the digital side is tested
 Would be nice to have a mode to control the DAC manually.
 
 I wasn't exactly certain how the digital reset side would behave--I got scared that I'd wind up with reversed logic and the demoboard holding everything in reset forever.  So I left it unconnected and sacrificed a digital in to be the new reset pin. Sadness.  But safe.  Just remember it needs to be connected, "right" (probably low to go but, yeah, not sure, hah).
+
+More grounding, and try to get in some bypass/bulk (for tiny values of bulk) capacitance.  We don't get filler, so it's DIY I did not D.
 
 
 
