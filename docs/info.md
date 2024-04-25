@@ -65,6 +65,28 @@ Using a conservative 50MHz clock, this means that readings can be done in about 
 
 These are _theoretical_ maxima, of course.  I haven't even tried to drive things this fast in sim, though that is planned.
 
+And this is for the digital side only.  From the analog side, a lot depends on the comparator (more below).  Short version is that it can react quite quickly.
+
+Here's a sim of the full analog side, looking at the comparator (a number of runs, gaussian distribution of temperatures):
+
+
+![comparator sim 1](images/wowa_analog_reactiontime1.jpg)
+
+Green is the threshold we're comparing to (DAC output), yellow is the input signal (so clean), and red is the comparator output.  On the left, you can see the whole sequence including a calibration step at the beginning.
+
+Things get a little fuzzy when the input is very close to the threshold, but otherwise you can see the comparator does a good job comparing, and reacts quickly too.  About 40 nanoseconds after the input goes above the threshold: bam, comparator is logic HIGH, even in the worst cases.
+
+So we're talking being able to deal in the tens of MHz for this wonderful circuit.
+
+
+However I did find some instances, like here where I suddenly set the DAC above the input (so comparator should go low):
+
+
+![comparator slow reactions](images/wowa_analog_reactiontime-highthresh.jpg)
+
+That's not pretty.  Suddenly we're looking at 200-400ns sometimes.  Ok, so let's revise that down to the low single digit MHz.   Say we always want to leave 400ns before sampling the comparator output, well it'll take us 3.2us To get a full byte of comparisons, so we're down to 312ksps.  I'd be ok with that.
+
+
 
 ### Analog
 
