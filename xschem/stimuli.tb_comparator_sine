@@ -1,0 +1,27 @@
+
+unit n
+voltage VCC
+slope 1
+format hspice_simple
+
+param eval 200
+
+beginfile stimuli_tb_comparator_sine.cir
+set vss 0
+set vcc 1
+set en_n 1
+set minus VTHRESH
+set CALIBTHRESH VTHRESH
+set start 1
+s 100
+set en_n 0
+s 100
+set start 0
+s 600
+set start 1
+s 1000
+
+endfile
+
+
+
