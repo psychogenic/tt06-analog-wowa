@@ -63,6 +63,8 @@ This actually charges up a capacitor internally which is used to adjust the comp
 
 Using a conservative 50MHz clock, this means that readings can be done in about 1.75 microseconds with calibration, and 1.2 us without.  Assuming we need to cal every 3 samples, this gives the ADC a throughput of around 720k samples per second, or more than 560ksps if you want to keep it simple and calibrate before every measurement, on a 50MHz clock.
 
+These are _theoretical_ maxima, of course.  I haven't even tried to drive things this fast in sim, though that is planned.
+
 
 ### Analog
 
@@ -100,7 +102,7 @@ I wasn't exactly certain how the digital reset side would behave--I got scared t
 
 More grounding, and try to get in some bypass/bulk (for tiny values of bulk) capacitance.  We don't get filler, so it's DIY I did not D.
 
-
+Before all that: build up testbench, get full simulation working, see if it'll even be worth the wait and have something to compare to when it does come back in physical form.
 
 ## How to test
 
