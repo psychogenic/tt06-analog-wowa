@@ -86,6 +86,8 @@ However I did find some instances, like here where I suddenly set the DAC above 
 
 That's not pretty.  Suddenly we're looking at 200-400ns sometimes.  Ok, so let's revise that down to the low single digit MHz.   Say we always want to leave 400ns before sampling the comparator output, well it'll take us 3.2us To get a full byte of comparisons, so we're down to 312ksps.  I'd be ok with that.
 
+A final  *however* on this front: if we really want 400ns for things to settle after the DAC is set, the digital side has 4 clock cycles between setting the DAC value, and the cycle when it actually captures the compator output.  I think that means we'd have to clock at 10MHz, thereby reducing our best effective max sample rate to 144ksps -- booo.  Ok, not that bad if it actually works and I am being quite conservative (hopefully) with that 400ns settle time.
+
 
 
 ### Analog
