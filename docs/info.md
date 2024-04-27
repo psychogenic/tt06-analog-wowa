@@ -130,10 +130,37 @@ Before all that: build up testbench, get full simulation working, see if it'll e
 
 ## How to test
 
-Bring enable comparator, and reset pin high, feed a target voltage (less than 1v8) into appropriate analog input pin, clock the device and watch the output bits on the digital side.
+Bring enable comparator, and reset pin low (?), feed a target voltage (less than 1v8) into appropriate analog input pin, clock the device and watch the output bits on the digital side.
 
 When result ready output pin pulses high, the output bits are a calculated result.
 
+Seems like it will be safe to clock at 10MHz, maybe more, uncertain as of yet.
+
+For your testing pleasure, there are addition inspection and manipulation ports through the analog pins.  These are
+
+
+  * ua[0]: The raw output from the comparator at the core of the design
+  
+  * ua[1]: p3 opamp out
+  
+  * ua[2]: p3 opamp plus side
+  
+  * ua[3]: p3 opamp minus/ext threshold for comp
+  
+  * ua[4]: Analog input to ADC
+  
+  * ua[5]: A probe into Matt's R2R DAC output (internal threshold for comparator while running the ADC
+  
+
+So the ADC basically only needs you to feed a signal into ua4.  You can see it in operation through ua0 and ua5.  You can use the comparator ignoring the ADC function, by setting ui[3] (use external threshold, digital input) HIGH and feeding a threshold voltage to the comparator on ua3.
+
+Finally, there's a whole opamp in there, designed by Sai, which I laid out and included as a second test of this design.  We'll be able to see if there's any measurable difference and play with opamps, which is fun.
+
+
+
+
 ## External hardware
 
-Voltage source for analog input.  Some way to look at outputs.
+Voltage source for analog input.  Some way to look at outputs, nominally through the RP2040 on the demoboard--will be writing a script for that.
+
+
