@@ -1,0 +1,24 @@
+
+unit n
+voltage VCC
+slope 1
+format hspice_simple
+
+param thresh 0.6
+beginfile stimuli_tb_calibrated_comparator_eyediag.cir
+set vss 0
+set vcc 1
+set en_n 0
+set calib 0
+set input_a 0.1
+s 200
+set calib 1
+s 500
+set calib 0
+s 200
+set input_a thresh
+
+
+endfile
+
+

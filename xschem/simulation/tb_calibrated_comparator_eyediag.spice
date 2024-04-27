@@ -1,12 +1,11 @@
-** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/tb_comparator_sine.sch
-**.subckt tb_comparator_sine
-x1 VCC VSS EN_N ADJ DIFFOUT_N PLUS MINUS comparator_stefan
-x2 ADJ DIFFOUT_N START START_N VCC VSS passgate W_N=1 L_N=0.2 W_P=0.5 L_P=0.15 m=1
-XC1 ADJ VSS sky130_fd_pr__cap_mim_m3_2 W=10 L=10 MF=5 m=5
-x3 START_N START VCC VSS not W_N=1 L_N=0.15 W_P=2 L_P=0.15 m=1
-V2 net1 VSS sin VTHRESH INAMP 5MEG 800n
-R1 PLUS net1 1k m=1
-R2 PLUS CALIBTHRESH 1k m=1
+** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/tb_calibrated_comparator_eyediag.sch
+**.subckt tb_calibrated_comparator_eyediag
+x1 VCC VSS INPUT THRESHV RESULT CALIB EN_N calibrated_comparator
+x2 VCC VSS INPUT THRESHV RESULT_PARAX CALIB EN_N calibrated_comparator
+XR1 INPUT_A INPUT net1 sky130_fd_pr__res_xhigh_po_1p41 L=40 mult=1 m=1
+XR2 INPUT_B INPUT net2 sky130_fd_pr__res_xhigh_po_1p41 L=40 mult=1 m=1
+VINPULSE INPUT_B VSS pulse VLOW VHIGH 1u 5n 5n PULSEWIDTH PULSEPER
+VTH THRESHV VSS dc 0.6
 **** begin user architecture code
 
 .param mc_mm_switch=1
@@ -29,36 +28,53 @@ R2 PLUS CALIBTHRESH 1k m=1
 .param VDLGAUSS = agauss(0.9, 0.23, 1)
 .param VDL = VDLGAUSS
 ** use following line to remove input common mode variations
-* .param VDL =  0.9
+* .param VDL =  1.4
 .param TEMPGAUSS = agauss(40, 30, 1)
 .option temp = 'TEMPGAUSS'
 ** use following line to remove temperature variations
 * .option temp = 25
 .param DELTA = 0.002
 
-.param INAMPGAUSS = agauss(0.5, 0.25, 1)
-.param INAMP = 'INAMPGAUSS'
 
-.param VTHRESHGAUSS = agauss(0.9, 0.15, 1)
-.param VTHRESH = 'VTHRESHGAUSS'
+* VLOW VHIGH 900n 1n 1n PULSEWIDTH PULSEPER
 
-.include stimuli_tb_comparator_sine.cir
+
+* our calibration stage/setup
+.include stimuli_tb_calibrated_comparator_eyediag.cir
+
+.param VLOW = -0.2
+.param VHIGH =2.2
+.param PULSEWIDTH = 100n
+.param PULSEPER = 200n
+
 
 .control
   setseed  8
   reset
   let run = 1
+  let pw = 50n
+  let pp = 100n
+  let vthresh = 0.01
   save all
   op
-  write tb_comparator_sine.raw
+  write tb_calibrated_comparator_eyediag.raw
   reset
   set appendwrite
-  dowhile run < = 40
+  dowhile vthresh <= 1.6
+
+   alter VTH vthresh
+   dowhile run < = 3
     save all
-    tran 2n 2.5u uic
-    write tb_comparator_sine.raw
+    let pw = pw * 2
+    let pp = pw * 2
+    * alter VINPULSE PW = pw
+    * alter VINPULSE PER = pp
+    tran 1n 3200n uic
+    write tb_calibrated_comparator_eyediag.raw
     let run = run + 1
     reset
+   end
+   let vthresh = vthresh + 0.05
   end
   quit 0
 .endc
@@ -66,6 +82,24 @@ R2 PLUS CALIBTHRESH 1k m=1
 
 **** end user architecture code
 **.ends
+
+* expanding   symbol:  calibrated_comparator.sym # of pins=7
+** sym_path: /home/ttuser/work/tt06-analog-wowa/xschem/calibrated_comparator.sym
+** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/calibrated_comparator.sch
+.subckt calibrated_comparator VCC VSS INPUT THRESHV RESULT CALIB EN_N
+*.ipin VCC
+*.ipin VSS
+*.ipin INPUT
+*.ipin THRESHV
+*.ipin CALIB
+*.opin RESULT
+*.ipin EN_N
+x1 VCC VSS EN_N ADJ RESULT INSIG THRESHV comparator_stefan
+x2 VCC VSS CALIB ADJ RESULT analogswitch
+x3 VCC VSS CALIB THRESHV INSIG INPUT onehot2mux
+XC1 ADJ VSS sky130_fd_pr__cap_mim_m3_1 W=10 L=10 MF=4 m=4
+.ends
+
 
 * expanding   symbol:  comparator_stefan.sym # of pins=7
 ** sym_path: /home/ttuser/work/tt06-analog-wowa/xschem/comparator_stefan.sym
@@ -126,35 +160,67 @@ XM15 n2n VCC VSS VSS sky130_fd_pr__nfet_01v8_lvt L=8 W=0.5 nf=1 ad='int((nf+1)/2
 .ends
 
 
-* expanding   symbol:  sky130_tests/passgate.sym # of pins=4
-** sym_path: /home/ttuser/pdk/sky130A/libs.tech/xschem/sky130_tests/passgate.sym
-** sch_path: /home/ttuser/pdk/sky130A/libs.tech/xschem/sky130_tests/passgate.sch
-.subckt passgate Z A GP GN VCCBPIN VSSBPIN  W_N=1 L_N=0.2 W_P=1 L_P=0.2
+* expanding   symbol:  analogswitch.sym # of pins=5
+** sym_path: /home/ttuser/work/tt06-analog-wowa/xschem/analogswitch.sym
+** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/analogswitch.sch
+.subckt analogswitch VCC VSS EN OUT IN
+*.ipin EN
+*.ipin IN
+*.opin OUT
+*.ipin VCC
+*.ipin VSS
+x2 OUT IN EN_N EN VSS VCC passgate
+x1 EN EN_N VCC VSS lvtnot
+.ends
+
+
+* expanding   symbol:  onehot2mux.sym # of pins=6
+** sym_path: /home/ttuser/work/tt06-analog-wowa/xschem/onehot2mux.sym
+** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/onehot2mux.sch
+.subckt onehot2mux VCC VSS SEL IN1 OUT IN0
+*.ipin SEL
+*.ipin IN0
+*.ipin IN1
+*.opin OUT
+*.ipin VCC
+*.ipin VSS
+x2 OUT IN1 SEL_N SEL VSS VCC passgate
+x3 OUT IN0 SEL SEL_N VSS VCC passgate
+x1 SEL SEL_N VCC VSS lvtnot
+.ends
+
+
+* expanding   symbol:  passgate.sym # of pins=6
+** sym_path: /home/ttuser/work/tt06-analog-wowa/xschem/passgate.sym
+** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/passgate.sch
+.subckt passgate Z A GP GN VSSBPIN VCCBPIN
 *.iopin A
 *.iopin Z
 *.ipin GP
 *.ipin GN
-XM1 Z GN A VSSBPIN sky130_fd_pr__nfet_01v8 L=L_N W=W_N nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
+*.ipin VCCBPIN
+*.ipin VSSBPIN
+XM1 Z GN A VSSBPIN sky130_fd_pr__nfet_01v8 L=0.2 W=2 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
 + pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
 + sa=0 sb=0 sd=0 mult=1 m=1
-XM2 Z GP A VCCBPIN sky130_fd_pr__pfet_01v8 L=L_P W=W_P nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
+XM2 Z GP A VCCBPIN sky130_fd_pr__pfet_01v8 L=0.2 W=2 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
 + pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
 + sa=0 sb=0 sd=0 mult=1 m=1
-* noconn VCCBPIN
-* noconn VSSBPIN
 .ends
 
 
-* expanding   symbol:  sky130_tests/not.sym # of pins=2
-** sym_path: /home/ttuser/pdk/sky130A/libs.tech/xschem/sky130_tests/not.sym
-** sch_path: /home/ttuser/pdk/sky130A/libs.tech/xschem/sky130_tests/not.sch
-.subckt not y a VCCPIN VSSPIN     W_N=1 L_N=0.15 W_P=2 L_P=0.15
+* expanding   symbol:  lvtnot.sym # of pins=4
+** sym_path: /home/ttuser/work/tt06-analog-wowa/xschem/lvtnot.sym
+** sch_path: /home/ttuser/work/tt06-analog-wowa/xschem/lvtnot.sch
+.subckt lvtnot a y VCCPIN VSSPIN
 *.opin y
 *.ipin a
-XM1 y a VSSPIN VSSPIN sky130_fd_pr__nfet_01v8 L=L_N W=W_N nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
+*.ipin VCCPIN
+*.ipin VSSPIN
+XM2 y a VCCPIN VCCPIN sky130_fd_pr__pfet_01v8_lvt L=0.35 W=2 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
 + pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
 + sa=0 sb=0 sd=0 mult=1 m=1
-XM2 y a VCCPIN VCCPIN sky130_fd_pr__pfet_01v8 L=L_P W=W_P nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
+XM1 y a VSSPIN VSSPIN sky130_fd_pr__nfet_01v8_lvt L=0.15 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
 + pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
 + sa=0 sb=0 sd=0 mult=1 m=1
 .ends

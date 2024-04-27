@@ -92,7 +92,7 @@ dataset=-1
 unitx=1
 logx=0
 logy=0
-}
+linewidth_mult=3}
 T {When SEL is HIGH, 
 output matches in1,
 otherwise in0 is 
